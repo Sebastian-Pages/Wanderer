@@ -146,11 +146,10 @@ public class UnitGroup extends UnitObservableAbstract {
 
 	@Override
 	public void accept(UnitVisitor v) {
-		v.visit(this);
- 		Set<Unit> unitsClone =(Set<Unit>) ((TreeSet<Unit>) units).clone();
-		for(Unit u : unitsClone) {
-			u.accept(v);
-		}	
+		Set<Unit> unitsClone =(Set<Unit>) ((TreeSet<Unit>) units).clone();
+		Set<Unit> units = v.visit(unitsClone);
+		//return units;
+
 	}
  
 }

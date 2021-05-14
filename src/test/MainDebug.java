@@ -6,10 +6,10 @@ package test;
 
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
-import soldier.core.AgeAbstractFactory;
-import soldier.core.Unit;
-import soldier.core.UnitGroup;
-import soldier.visitor.DisplayVisitor;
+import soldier.core.*;
+import soldier.gameManagment.Player;
+import soldier.gameManagment.Position;
+import soldier.ui.CLBuilder;
 
 public class MainDebug {
 
@@ -27,15 +27,18 @@ public class MainDebug {
 	}
 	
 	public static void main(String[] args) {
+		//builder de type command line
+		DisplayBuilder builder = new CLBuilder();
+		Position initPos = new Position(0,0);
 
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
 		AgeAbstractFactory age2 = new AgeFutureFactory();
 
 		UnitGroup team1 = createTeam1(age1);
 		UnitGroup  team2 = createTeam2(age2);
-		
-		team1.accept(new DisplayVisitor());
-		team2.accept(new DisplayVisitor());
+
+		Player player1 = new Player("Patrick",team1,0,initPos,initPos);
+		player1.displayPlayer(builder);
 	}
 
 }
