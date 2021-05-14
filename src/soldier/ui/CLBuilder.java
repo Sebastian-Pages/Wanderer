@@ -10,7 +10,7 @@ import soldier.visitor.DisplayVisitor;
 public class CLBuilder implements DisplayBuilder {
     @Override
     public void displayArmy(UnitGroup army) {
-        String result="";
+        String result="\n";
         result=result+"Army:"+army.getName()+" Contains: ";
         System.out.print(result);
     }
