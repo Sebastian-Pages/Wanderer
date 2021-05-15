@@ -19,6 +19,7 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
+    private float speed= 3;
 
     private Pane layer;
     private List<ImageView> imageViews;
@@ -34,6 +35,18 @@ public class Player {
         this.imageViews = new ArrayList<>();
 
     }
+
+    public void move(){
+        if (position.getX() < destination.getX())
+            position.setX(position.getX()+(int)speed);
+        if (position.getX() > destination.getX())
+            position.setX(position.getX()-(int)speed);
+        if (position.getY() < destination.getY())
+            position.setY(position.getY()+(int)speed);
+        if (position.getY() > destination.getY())
+            position.setY(position.getY()-(int)speed);
+    }
+
     public void add(Unit u ,Image image){
         this.army.addUnit(u);
         this.imageViews.add(new ImageView(image));

@@ -6,12 +6,14 @@ package test;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import soldier.ages.AgeFutureFactory;
@@ -44,7 +46,9 @@ public class Main extends Application {
 	private List<Player> players = new ArrayList<>();;
 	private Player player1;
 	private Map map;
-	DisplayBuilder builder;
+	private DisplayBuilder builder;
+	private boolean pauseState = false;
+
 
 	/** IMAGES **/
 	private Image humanImage;
@@ -63,10 +67,12 @@ public class Main extends Application {
 		playfieldLayer = new Pane();
 		root.getChildren().add(playfieldLayer);
 
-		//Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-		//primaryStage.setTitle("Hello World");
-		//primaryStage.setScene(new Scene(root, 300, 275));
-		//primaryStage.show();
+		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				player1.setDestination(new Position((int) event.getX(),(int) event.getY() ));
+			}
+		});
 
 		/** INITIALIZING GAME **/
 		loadGame();
@@ -79,14 +85,14 @@ public class Main extends Application {
 				processInput(input, now);
 				System.out.println("boucle");
 				try {
-					Thread.sleep(250);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 
 				//player1.displayPlayer(builder);
 				//players.forEach(  player -> player.displayPlayer(builder));
-				players.forEach(  player -> player.setPosition(new Position(player.getPosition().getX()+1,player.getPosition().getY()+1)));
+				//players.forEach(  player -> player.setPosition(new Position(player.getPosition().getX()+1,player.getPosition().getY()+1)));
 
 				/** PLAYER INPUT **/
 				//player.processInput();
@@ -95,7 +101,7 @@ public class Main extends Application {
 				//updateUnitsCount(true);
 
 				/** MOVEMENTS **/
-				//player.move();
+				players.forEach(player -> player.move());
 				//enemies.forEach(sprite -> sprite.move());
 				//missiles.forEach(sprite -> sprite.move());
 				//units.forEach(sprite -> sprite.move());
@@ -153,6 +159,7 @@ public class Main extends Application {
 
 		/* INITIALIZING GAME */
 		input = new Input(scene);
+		input.addListeners();
 		builder = new JFXBuilder();
 		map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
 
@@ -170,6 +177,21 @@ public class Main extends Application {
 		player1.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player1);
 		player1.addToLayer(builder);
+
+
+
+		scene.setOnKeyTyped(ke ->{
+			if(input.isPaused()) {
+				if(pauseState) {
+					gameLoop.start();
+					pauseState=false;
+				}
+				else {
+					gameLoop.stop();
+					pauseState=true;
+				}
+			}
+		});
 	}
 
 
