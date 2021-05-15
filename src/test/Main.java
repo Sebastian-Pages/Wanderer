@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import soldier.ages.AgeFutureFactory;
@@ -23,6 +25,7 @@ import soldier.ui.JFXBuilder;
 
 import javafx.animation.AnimationTimer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends Application {
@@ -38,11 +41,14 @@ public class Main extends Application {
 	private Input input;
 
 	/** GAME VARIABLES **/
-	private List<Player> players;
+	private List<Player> players = new ArrayList<>();;
 	private Player player1;
 	private Map map;
 	DisplayBuilder builder;
+
 	/** IMAGES **/
+	private Image humanImage;
+	private Image orcImage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -78,7 +84,9 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 
-				player1.displayPlayer(builder);
+				//player1.displayPlayer(builder);
+				//players.forEach(  player -> player.displayPlayer(builder));
+				players.forEach(  player -> player.setPosition(new Position(player.getPosition().getX()+1,player.getPosition().getY()+1)));
 
 				/** PLAYER INPUT **/
 				//player.processInput();
@@ -103,6 +111,8 @@ public class Main extends Application {
 				//checkSieges();
 
 				/** UPDATE SPRITES IN SCENE **/
+				//players.forEach(sprite -> sprite.updateUI(builder));
+				player1.updateUI(builder);
 				//player.updateUI();
 				//castles.forEach(sprite -> sprite.updateUI());
 				//units.forEach(sprite -> sprite.updateUI());
@@ -137,19 +147,25 @@ public class Main extends Application {
 	}
 
 	private void loadGame() {
-		System.out.println("laoding game");
+		/* LOAD IMAGES */
+		humanImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseFixe.png").toExternalForm(), Settings.UNIT_SIZE, Settings.UNIT_SIZE, true, true);
+		orcImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseFixe.png").toExternalForm(), Settings.UNIT_SIZE, Settings.UNIT_SIZE, true, true);
 
 		/* INITIALIZING GAME */
 		input = new Input(scene);
-		builder = new CLBuilder();
+		builder = new JFXBuilder();
 		map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
 
+		/*MAKE PLAYER */
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
-		UnitGroup team1 =  new UnitGroup("Mammals");
-		team1.addUnit(age1.infantryUnit("mouse"));
-		team1.addUnit(age1.infantryUnit("cat"));
-		player1 = new Player("Patrick",team1,0,new Position(0,0),new Position(0,0));
-
+		UnitGroup team1 =  new UnitGroup("TheArmy");
+		team1.addUnit(age1.infantryUnit("human"));
+		team1.addUnit(age1.infantryUnit("orc"));
+		player1 = new Player(playfieldLayer,"Patrick",team1,0,new Position(100,100),new Position(100,100));
+		player1.addImageView(new ImageView(humanImage));
+		player1.addImageView(new ImageView(orcImage));
+		player1.addToLayer(builder);
+		players.add(player1);
 	}
 
 
