@@ -23,18 +23,25 @@ import soldier.ui.JFXBuilder;
 
 import javafx.animation.AnimationTimer;
 
+import java.util.List;
+
 public class Main extends Application {
 
 	/**DECLARATION DES VARIABLES GLOBALES**/
 
-	/** VARIALBES JFX **/
+	/** VARIABLES JFX **/
 	private Scene scene;
 	private AnimationTimer gameLoop;
 	private Pane playfieldLayer;
-	Group root;
+	private Group root;
 
 	private Input input;
 
+	/** GAME VARIABLES **/
+	private List<Player> players;
+	private Player player1;
+	private Map map;
+	DisplayBuilder builder;
 	/** IMAGES **/
 
 	@Override
@@ -64,6 +71,14 @@ public class Main extends Application {
 			@Override
 			public void handle(long now) {
 				processInput(input, now);
+				System.out.println("boucle");
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				player1.displayPlayer(builder);
 
 				/** PLAYER INPUT **/
 				//player.processInput();
@@ -113,6 +128,7 @@ public class Main extends Application {
 			private void processInput(Input input, long now) {
 				if (input.isExit()) {
 					Platform.exit();
+					//System.out.println("exited");
 					System.exit(0);
 				}
 			}
@@ -121,19 +137,19 @@ public class Main extends Application {
 	}
 
 	private void loadGame() {
+		System.out.println("laoding game");
 
 		/* INITIALIZING GAME */
-		DisplayBuilder builder = new JFXBuilder();
-		Map map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
-
-		/*antoine je te laisse ajouter ici des méthodes pour créer les players*/
+		input = new Input(scene);
+		builder = new CLBuilder();
+		map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
 
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
 		UnitGroup team1 =  new UnitGroup("Mammals");
 		team1.addUnit(age1.infantryUnit("mouse"));
 		team1.addUnit(age1.infantryUnit("cat"));
-		Player player1 = new Player("Patrick",team1,0,new Position(0,0),new Position(0,0));
-		player1.displayPlayer(builder);
+		player1 = new Player("Patrick",team1,0,new Position(0,0),new Position(0,0));
+
 	}
 
 
