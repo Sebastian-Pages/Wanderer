@@ -6,7 +6,9 @@ package test;
 
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
-import soldier.core.*;
+import soldier.core.AgeAbstractFactory;
+import soldier.core.DisplayBuilder;
+import soldier.core.UnitGroup;
 import soldier.gameManagment.Player;
 import soldier.gameManagment.Position;
 import soldier.ui.CLBuilder;
