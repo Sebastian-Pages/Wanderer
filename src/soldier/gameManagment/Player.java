@@ -3,14 +3,13 @@ package soldier.gameManagment;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
-import soldier.ui.JFXBuilder;
-import soldier.visitor.GetterVisitor;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Player {
@@ -20,17 +19,28 @@ public class Player {
     private Position position;
     private Position destination;
     private float speed= 3;
+    private Circle hitbox;
+    private boolean isRemovable = false;
+
+
+
+    private boolean isAlly;
 
     private Pane layer;
     private List<ImageView> imageViews;
 
-    public Player(Pane layer, String name, int score, Position position, Position destination) {
+    public Player(Pane layer, String name, int score, Position position, Position destination,boolean isAlly) {
         this.name = name;
         this.army = new UnitGroup(name);
         this.score = score;
         this.position = position;
         this.destination = destination;
-
+        this.hitbox = new Circle(10);
+        this.isAlly = isAlly;
+        if(isAlly)
+            hitbox.setFill(Color.PALEGREEN);
+        else
+            hitbox.setFill(Color.SALMON);
         this.layer = layer;
         this.imageViews = new ArrayList<>();
 
@@ -50,25 +60,33 @@ public class Player {
     public void add(Unit u ,Image image){
         this.army.addUnit(u);
         this.imageViews.add(new ImageView(image));
+        this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
     }
 
-    public void remove(Unit u,Image image){
+    public void add(Unit u ,ImageView imageView){
+        this.army.addUnit(u);
+        this.imageViews.add(imageView);
+        this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
+    }
+
+    public void remove(Unit u,ImageView imageView){
         this.army.removeUnit(u);
-        this.imageViews.remove(new ImageView(image));
+        this.imageViews.remove(imageView);
+        this.hitbox.setRadius(hitbox.getRadius()-Settings.UNIT_SIZE/2);
     }
 
     public void addToLayer(DisplayBuilder builder) {
-        builder.addUnitGroupToLayer(army,layer,imageViews);
+        builder.addUnitGroupToLayer(army,layer,imageViews,hitbox);
         //this.layer.getChildren().add(this.imageView);
     }
 
     public void removeFromLayer(DisplayBuilder builder) {
-        builder.removeUnitGroupFromLayer(army,layer,imageViews);
+        builder.removeUnitGroupFromLayer(army,layer,imageViews,hitbox);
         //this.layer.getChildren().remove(this.imageView);
     }
 
     public void updateUI(DisplayBuilder builder) {
-        builder.updateUnitGroup(army,position, layer,imageViews);
+        builder.updateUnitGroup(army,position, layer,imageViews,hitbox);
         //imageView.relocate(position.x, position.y);
     }
 
@@ -118,5 +136,25 @@ public class Player {
 
     public void setDestination(Position destination) {
         this.destination = destination;
+    }
+
+    public int getRadius(){
+        return (int) this.hitbox.getRadius();
+    }
+
+    public List<ImageView> getImageViews() {
+        return imageViews;
+    }
+
+    public boolean isAlly() {
+        return isAlly;
+    }
+
+    public boolean isRemovable() {
+        return isRemovable;
+    }
+
+    public void setIsRemovable(boolean removable) {
+        this.isRemovable = removable;
     }
 }

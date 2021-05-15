@@ -25,6 +25,10 @@ public class Position {
         this.y = y;
     }
 
+    public int distance(Position p){
+        return Math.abs(x-p.getX()+y-p.getY());
+    }
+
     @Override
     public String toString() {
         return "Position{" +

@@ -7,27 +7,23 @@ package test;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
-import soldier.core.UnitGroup;
+import soldier.core.Unit;
 import soldier.gameManagment.*;
-import soldier.ui.CLBuilder;
 import soldier.ui.JFXBuilder;
 
 import javafx.animation.AnimationTimer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main extends Application {
@@ -83,7 +79,6 @@ public class Main extends Application {
 			@Override
 			public void handle(long now) {
 				processInput(input, now);
-				System.out.println("boucle");
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
@@ -111,14 +106,16 @@ public class Main extends Application {
 				//AI();
 
 				/** CHECK COLLISIONS **/
-				//checkCollisions();
+				checkCollisions();
+
 				//checkOrders();
 				//checkSiege();
 				//checkSieges();
 
 				/** UPDATE SPRITES IN SCENE **/
 				//players.forEach(sprite -> sprite.updateUI(builder));
-				player1.updateUI(builder);
+				//player1.updateUI(builder);
+				players.forEach(player -> player.updateUI(builder));
 				//player.updateUI();
 				//castles.forEach(sprite -> sprite.updateUI());
 				//units.forEach(sprite -> sprite.updateUI());
@@ -130,6 +127,7 @@ public class Main extends Application {
 				//osts.forEach(sprite -> sprite.checkRemovability());
 
 				/** REMOVE REMOVABLES FROM LIST LAYER ETC **/
+				removePlayers();
 				//removeSprites(castles);
 				//removeSprites(units);
 				//removeSprites(osts);
@@ -152,6 +150,8 @@ public class Main extends Application {
 		gameLoop.start();
 	}
 
+
+
 	private void loadGame() {
 		/* LOAD IMAGES */
 		humanImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseFixe.png").toExternalForm(), Settings.UNIT_SIZE, Settings.UNIT_SIZE, true, true);
@@ -172,11 +172,16 @@ public class Main extends Application {
 		//player1.addImageView(new ImageView(orcImage));
 		//player1.addToLayer(builder);
 
-		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100));
+		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100),true);
 		player1.add(age1.infantryUnit("human"),humanImage);
 		player1.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player1);
 		player1.addToLayer(builder);
+
+		Player player2 = new Player(playfieldLayer,"Patrick",0,new Position(500,500),new Position(500,500),true);
+		player2.add(age1.infantryUnit("orc"),orcImage);
+		players.add(player2);
+		player2.addToLayer(builder);
 
 
 
@@ -192,6 +197,60 @@ public class Main extends Application {
 				}
 			}
 		});
+	}
+
+	private void checkCollisions() {
+		players.forEach(player -> checkCollision(player));
+	}
+
+	private void checkCollision(Player player) {
+		if (player.equals(player1))
+			return;
+		else
+			if (player.getPosition().distance(player1.getPosition())<player.getRadius()+ player1.getRadius())
+				collide(player);
+	}
+
+	private void collide(Player player) {
+		System.out.println("collision "+players.toString());
+		if (player.isAlly())
+			merge(player);
+		else
+			fight(player);
+	}
+
+	private void fight(Player player) {
+
+	}
+
+	private void merge(Player player) {
+		int rank = 0;
+		player1.removeFromLayer(builder);
+		player.removeFromLayer(builder);
+		for (Iterator<Unit> it = player.getArmy().subUnits(); it.hasNext(); ) {
+			Unit u = it.next();
+			player1.add(u,player.getImageViews().get(rank));
+			player.remove(u,player.getImageViews().get(rank));
+			//players.remove(player);
+			//player.removeFromLayer(builder);
+		}
+		player1.addToLayer(builder);
+		player.setIsRemovable(true);
+	}
+
+	private void removePlayers() {
+		Iterator<Player> iter = players.iterator();
+		while (iter.hasNext()) {
+			Player p = iter.next();
+
+			if (p.isRemovable()) {
+				// remove from layer
+				// p.removeFromLayer();
+				// remove from list
+				System.out.println(p.toString()+" removed");
+				iter.remove();
+			}
+		}
 	}
 
 

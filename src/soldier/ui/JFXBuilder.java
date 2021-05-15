@@ -2,6 +2,7 @@ package soldier.ui;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
@@ -27,7 +28,8 @@ public class JFXBuilder implements DisplayBuilder {
     }
 
     @Override
-    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews) {
+    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox) {
+        hitbox.relocate(p.getX()-hitbox.getRadius(),p.getY()-hitbox.getRadius());
         int rank = 0;
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
             updateUnit(it.next(),p,rank,layer, imageViews.get(rank));
@@ -36,7 +38,8 @@ public class JFXBuilder implements DisplayBuilder {
     }
 
     @Override
-    public void addUnitGroupToLayer(UnitGroup a, Pane layer, List<ImageView> imageViews) {
+    public void addUnitGroupToLayer(UnitGroup a, Pane layer, List<ImageView> imageViews, Circle hitbox) {
+        layer.getChildren().add(hitbox);
         int rank = 0;
         //System.out.println(imageViews.toString());
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
@@ -48,8 +51,16 @@ public class JFXBuilder implements DisplayBuilder {
     }
 
     @Override
-    public void removeUnitGroupFromLayer(UnitGroup a, Pane layer, List<ImageView> imageViews) {
-
+    public void removeUnitGroupFromLayer(UnitGroup a, Pane layer, List<ImageView> imageViews,Circle hitbox) {
+        layer.getChildren().remove(hitbox);
+        int rank = 0;
+        //System.out.println(imageViews.toString());
+        for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
+            //System.out.println("rank: "+rank);
+            it.next();
+            layer.getChildren().remove(imageViews.get(rank));
+            ++rank;
+        }
     }
 
 }
