@@ -23,29 +23,26 @@ public class Player {
     private Pane layer;
     private List<ImageView> imageViews;
 
-    public Player(Pane layer, String name, UnitGroup army, int score, Position position, Position destination) {
+    public Player(Pane layer, String name, int score, Position position, Position destination) {
         this.name = name;
-        this.army = army;
+        this.army = new UnitGroup(name);
         this.score = score;
         this.position = position;
         this.destination = destination;
 
         this.layer = layer;
-        //this.imageView = new ImageView(image);
         this.imageViews = new ArrayList<>();
-        //this.imageView.relocate(position.x, position.y);
 
     }
-    /*
-    public void displayPlayer(DisplayBuilder builder){
-        //GetterVisitor gv = new GetterVisitor();
-        int rank = 0;
-        builder.displayUnitGroup(army, position);
-        for (Iterator<Unit> it = this.army.subUnits(); it.hasNext(); ) {
-            //builder.displayIdleUnit(it.next(),position,rank);
-            ++rank;
-        }
-    }*/
+    public void add(Unit u ,Image image){
+        this.army.addUnit(u);
+        this.imageViews.add(new ImageView(image));
+    }
+
+    public void remove(Unit u,Image image){
+        this.army.removeUnit(u);
+        this.imageViews.remove(new ImageView(image));
+    }
 
     public void addToLayer(DisplayBuilder builder) {
         builder.addUnitGroupToLayer(army,layer,imageViews);

@@ -158,14 +158,18 @@ public class Main extends Application {
 
 		/*MAKE PLAYER */
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
-		UnitGroup team1 =  new UnitGroup("TheArmy");
-		team1.addUnit(age1.infantryUnit("human"));
-		team1.addUnit(age1.infantryUnit("orc"));
-		player1 = new Player(playfieldLayer,"Patrick",team1,0,new Position(100,100),new Position(100,100));
-		player1.addImageView(new ImageView(humanImage));
-		player1.addImageView(new ImageView(orcImage));
-		player1.addToLayer(builder);
+		//UnitGroup team1 =  new UnitGroup("TheArmy");
+		//team1.addUnit(age1.infantryUnit("human"));
+		//team1.addUnit(age1.infantryUnit("orc"));
+		//player1.addImageView(new ImageView(humanImage));
+		//player1.addImageView(new ImageView(orcImage));
+		//player1.addToLayer(builder);
+
+		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100));
+		player1.add(age1.infantryUnit("human"),humanImage);
+		player1.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player1);
+		player1.addToLayer(builder);
 	}
 
 
