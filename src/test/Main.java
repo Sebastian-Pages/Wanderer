@@ -147,7 +147,6 @@ public class Main extends Application {
 				//update();
 				//castles.forEach(castle -> castle.update());
 				//checkIfGameOver();
-				//gameOver();
 			}
 
 			private void processInput(Input input, long now) {
@@ -264,12 +263,17 @@ public class Main extends Application {
 			team1.parry(st2);
 		}
 		System.out.println("The end ... " + (team1.alive() ? team1.getName() : team2.getName()) + " won." );
+
 		if(team1.alive()){
 			player.removeFromLayer(builder);
 			player.setIsRemovable(true);
+			player1.updateArmy();
 		}else{
 			player1.removeFromLayer(builder);
 			player1.setIsRemovable(true);
+			player.updateArmy();
+			gameOver();
+			//Ajout Image game over
 		}
 	}
 
