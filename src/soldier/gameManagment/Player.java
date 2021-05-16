@@ -36,7 +36,7 @@ public class Player {
         this.score = score;
         this.position = position;
         this.destination = destination;
-        this.hitbox = new Circle(10);
+        this.hitbox = new Circle(20);
         this.isAlly = isAlly;
         if(isAlly)
             hitbox.setFill(Color.PALEGREEN);
@@ -58,18 +58,17 @@ public class Player {
             position.setY(position.getY()-(int)speed);
     }
 
-    public void add(Unit u ,Image image){
-        this.army.addUnit(u);
-        this.imageViews.add(new ImageView(image));
-        this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
-        this.size += 1;
+    public void add(Unit u ,Image image) {
+        add(u, new ImageView(image));
     }
 
     public void add(Unit u ,ImageView imageView){
-        this.army.addUnit(u);
-        this.imageViews.add(imageView);
-        this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
-        this.size += 1;
+        if (size<9) {
+            this.army.addUnit(u);
+            this.imageViews.add(imageView);
+            this.hitbox.setRadius(hitbox.getRadius() + Settings.UNIT_SIZE / 4);
+            this.size += 1;
+        }
     }
 
     public void remove(Unit u,ImageView imageView){

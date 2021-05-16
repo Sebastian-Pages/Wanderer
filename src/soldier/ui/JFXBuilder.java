@@ -18,24 +18,18 @@ public class JFXBuilder implements DisplayBuilder {
         int rows = 3;
         int cols = size/rows +1;
 
-        if (size == 1){
+        if (size == 1)
             imageView.relocate(p.getX()- Settings.UNIT_SIZE/2, p.getY()- Settings.UNIT_SIZE/2);
-            System.out.println("  size: "+size);
-        }
-        if (size == 2){
+
+        if (size == 2)
             imageView.relocate(p.getX()- Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_SIZE/2);
-            System.out.println(" size: "+size);
-        }
-        //cols/(rank+1) x
+
         if (size == 3){
-            if (rank <2) {
-                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET/2);
-            }
-            if (rank == 2) {
-                System.out.println(" DEBUG: ");
-                imageView.relocate(p.getX() - Settings.UNIT_OFFSET/2, p.getY() + Settings.UNIT_OFFSET/2);
-            }
-            System.out.println(" size: "+size+" rows: "+rows+" cols: "+cols+" test: "+rank);
+            if (rank <2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET);
+
+            if (rank == 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET/2, p.getY());
         }
 
         if (size == 4){
@@ -44,10 +38,46 @@ public class JFXBuilder implements DisplayBuilder {
             if (rank > 1)
                 imageView.relocate(p.getX() - Settings.UNIT_OFFSET + (rank-2)*Settings.UNIT_OFFSET, p.getY());
         }
+        if (size == 5){
+            if (rank < 3)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET-Settings.UNIT_OFFSET/2 + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET);
+            if (rank > 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + (rank-3)*Settings.UNIT_OFFSET, p.getY());
+        }
 
-        if (size > 4){
-            //int xoffset = 36 * (rank % rows) - (Math.min(rows, 2) * 32 / 2);
-            //int yoffset = 36 * (rank / (cols + 1)) - (36 * cols / 2);
+        if (size == 6){
+            if (rank < 3)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET-Settings.UNIT_OFFSET/2 + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET);
+            if (rank > 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2+ (rank-3)*Settings.UNIT_OFFSET, p.getY());
+        }
+
+        if (size == 7){
+            if (rank < 3)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET-Settings.UNIT_OFFSET/2 + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET*1.5);
+            if (6 > rank && rank > 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2+ (rank-3)*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET/2);
+            if (rank > 5)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2+ (rank-5)*Settings.UNIT_OFFSET, p.getY()+ Settings.UNIT_OFFSET/2);
+        }
+
+        if (size == 8){
+            if (rank < 3)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET-Settings.UNIT_OFFSET/2 + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET*1.5);
+            if (6 > rank && rank > 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2+ (rank-3)*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET/2);
+            if (rank > 5)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + (rank-6)*Settings.UNIT_OFFSET, p.getY()+ Settings.UNIT_OFFSET/2);
+        }
+        if (size == 9){
+            if (rank < 3)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET-Settings.UNIT_OFFSET/2 + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET*1.5);
+            if (6 > rank && rank > 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2+ (rank-3)*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET/2);
+            if (rank > 5)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET -Settings.UNIT_OFFSET/2 + (rank-6)*Settings.UNIT_OFFSET, p.getY()+ Settings.UNIT_OFFSET/2);
+        }
+        if (size > 9){
             imageView.relocate(p.getX()+32*rank , p.getY() );
         }
     }

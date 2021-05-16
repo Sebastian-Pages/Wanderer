@@ -80,7 +80,7 @@ public class Main extends Application {
 			public void handle(long now) {
 				processInput(input, now);
 				try {
-					Thread.sleep(100);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -183,10 +183,13 @@ public class Main extends Application {
 
 		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),true);
 		player2.add(age1.infantryUnit("orc"),orcImage);
+		player2.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 
 		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),true);
+		player3.add(age1.infantryUnit("human"),humanImage);
+		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
