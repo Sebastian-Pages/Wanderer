@@ -54,10 +54,13 @@ public class Main extends Application {
 
 
 	/** IMAGES **/
-	private Image humanImage;
-	private Image orcImage;
+	private Image centurionImage;
+	private Image HorsemanImage;
+	private Image RobotImage;
+	private Image BikermanImage;
 	private Image swordImage;
 	private Image shieldImage;
+	private Image potionImage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -174,10 +177,11 @@ public class Main extends Application {
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		humanImage =  new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		orcImage =    new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		centurionImage =  new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		HorsemanImage =    new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		swordImage =  new Image(getClass().getResource("/Equipment/sword.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
+		potionImage = new Image(getClass().getResource("/Equipment/potion.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 
 
 		/* INITIALIZING GAME */
@@ -196,32 +200,32 @@ public class Main extends Application {
 		//player1.addToLayer(builder);
 
 		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100),true);
-		player1.add(age1.infantryUnit("human"),humanImage);
-		player1.add(age1.infantryUnit("human"),humanImage);
-		player1.add(age1.infantryUnit("orc"),orcImage);
+		player1.add(age1.infantryUnit("human"), centurionImage);
+		player1.add(age1.infantryUnit("human"), centurionImage);
+		player1.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player1);
 		player1.addToLayer(builder);
 
 		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
-		player2.add(age1.infantryUnit("orc"),orcImage);
-		player2.add(age1.infantryUnit("orc"),orcImage);
+		player2.add(age1.infantryUnit("orc"), HorsemanImage);
+		player2.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 
 		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),false);
-		player3.add(age1.infantryUnit("human"),humanImage);
-		player3.add(age1.infantryUnit("human"),humanImage);
-		player3.add(age1.infantryUnit("human"),humanImage);
-		player3.add(age1.infantryUnit("human"),humanImage);
-		player3.add(age1.infantryUnit("human"),humanImage);
-		player3.add(age1.infantryUnit("human"),humanImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
+		player3.add(age1.infantryUnit("human"), centurionImage);
 		players.add(player3);
 		player3.addToLayer(builder);
 
-		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage);
+		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 		loot1.addToLayer(builder);
 		loots.add(loot1);
-		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage);
+		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 		loot2.addToLayer(builder);
 		loots.add(loot2);
 
@@ -252,9 +256,12 @@ public class Main extends Application {
 	}
 
 	private void pickUpLoot(Loot loot) {
-		player1.addEquipment(loot);
-		player1.setScore(player1.getScore()-loot.getCost());
-		//loot.removeFromLayer(builder);
+		if (loot.getEquipment()==null)
+			player1.heal();
+		else {
+			player1.addEquipment(loot);
+			player1.setScore(player1.getScore() - loot.getCost());
+		}
 		loot.setIsRemovable(true);
 	}
 

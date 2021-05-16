@@ -40,28 +40,35 @@ public class Loot {
         this.equipment = equipment;
     }
 
-    public  Loot(Pane layer, Image shieldImage, Image swordImage){
+    public  Loot(Pane layer, Image shieldImage, Image swordImage, Image potionImage){
         AgeAbstractFactory fact;
         this.name = "Random Equipment";
         this.layer=layer;
         int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+        int rand2 = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+        int rand3 = ThreadLocalRandom.current().nextInt(0, 2 + 1);
         int x = ThreadLocalRandom.current().nextInt(0, Settings.SCENE_WIDTH + 1);
         int y= ThreadLocalRandom.current().nextInt(0, Settings.SCENE_HEIGHT + 1);
         this.cost = ThreadLocalRandom.current().nextInt(1, 5 + 1);
         this.count = ThreadLocalRandom.current().nextInt(0, 3 + 1);
         this.dir = ThreadLocalRandom.current().nextInt(0, 3 + 1);
-        if ( (count & 1) == 0 )
+        if ( rand > 0)
             fact = new AgeMiddleFactory();
         else
             fact = new AgeFutureFactory();
 
-        if ( (rand & 1) == 0 ){
+        if ( rand2 > 0){
             this.equipment=fact.attackWeapon();
             this.imageView = new ImageView(swordImage);
         }
         else{
             this.equipment=fact.defenseWeapon();
             this.imageView = new ImageView(shieldImage);
+        }
+        if ( rand3 == 0){
+            this.imageView = new ImageView(potionImage);
+            this.equipment=null;
+            this.cost=0;
         }
         this.hitbox = new Circle(40);
         this.hitbox.setFill(Color.BEIGE);

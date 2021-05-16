@@ -213,4 +213,8 @@ public class Player {
     public void addEquipment(Loot loot) {
         army.addEquipment(loot.getEquipment());
     }
+
+    public void heal() {
+        army.heal();
+    }
 }
