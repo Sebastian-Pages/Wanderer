@@ -183,6 +183,14 @@ public class Main extends Application {
 		players.add(player2);
 		player2.addToLayer(builder);
 
+		Player player3 = new Player(playfieldLayer,"Patrick",0,new Position(500,700),new Position(500,700),true);
+		player3.add(age1.infantryUnit("human"),humanImage);
+		player3.add(age1.infantryUnit("human"),humanImage);
+		player3.add(age1.infantryUnit("human"),humanImage);
+		player3.add(age1.infantryUnit("human"),humanImage);
+		players.add(player3);
+		player3.addToLayer(builder);
+
 
 
 		scene.setOnKeyTyped(ke ->{

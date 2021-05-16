@@ -18,7 +18,7 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
-    private float speed= 3;
+    private float speed= 5;
     private Circle hitbox;
     private boolean isRemovable = false;
 
