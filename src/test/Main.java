@@ -7,11 +7,17 @@ package test;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
@@ -19,9 +25,11 @@ import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.gameManagment.*;
 import soldier.ui.JFXBuilder;
+import javafx.scene.text.Font;
 
 import javafx.animation.AnimationTimer;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -141,6 +149,7 @@ public class Main extends Application {
 				//update();
 				//castles.forEach(castle -> castle.update());
 				//checkIfGameOver();
+				gameOver();
 			}
 
 			private void processInput(Input input, long now) {
@@ -287,6 +296,20 @@ public class Main extends Application {
 				iter.remove();
 			}
 		}
+	}
+
+	private void gameOver(){
+		HBox hbox = new HBox();
+		hbox.setPrefSize(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		//hbox.getStyleClass().add("message");
+		Text message = new Text();
+		message.getStyleClass().add("message");
+		message.setText("Game over");
+		message.setFont(Font.font ("Impact", 200));
+		message.setFill(Color.ORANGE);
+		hbox.getChildren().add(message);
+		root.getChildren().add(hbox);
+		gameLoop.stop();
 	}
 
 
