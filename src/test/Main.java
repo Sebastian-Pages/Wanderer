@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -61,6 +62,7 @@ public class Main extends Application {
 	private Image swordImage;
 	private Image shieldImage;
 	private Image potionImage;
+	private Image mapImage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -76,6 +78,7 @@ public class Main extends Application {
 		UILayer = new Pane();
 		root.getChildren().add(playfieldLayer);
 		root.getChildren().add(UILayer);
+
 
 		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -186,12 +189,15 @@ public class Main extends Application {
 		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 		potionImage = new Image(getClass().getResource("/Equipment/potion.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 
+		mapImage = new Image(getClass().getResource("/background1.png").toExternalForm(), Settings.SCENE_WIDTH, Settings.SCENE_WIDTH, true, true);
+
 
 		/* INITIALIZING GAME */
 		input = new Input(scene);
 		input.addListeners();
 		builder = new JFXBuilder();
 		map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
+		playfieldLayer.getChildren().add(new ImageView(mapImage));
 
 		/*MAKE PLAYER */
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
