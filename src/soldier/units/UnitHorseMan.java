@@ -11,7 +11,7 @@ import soldier.core.UnitRider;
 public class UnitHorseMan extends UnitRider {
 
 	public UnitHorseMan(String soldierName) {
-		super(soldierName, new BehaviorSoldierStd(20, 120));
+		super(soldierName, new BehaviorSoldierStd(400, 85));
 	}
 
 	/**

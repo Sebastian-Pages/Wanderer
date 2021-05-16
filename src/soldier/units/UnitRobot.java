@@ -11,7 +11,7 @@ import soldier.core.Equipment;
 public class UnitRobot extends UnitInfantry {
 
 	public UnitRobot(String soldierName) {
-		super(soldierName, new BehaviorSoldierHealthBased( 50, 100));
+		super(soldierName, new BehaviorSoldierHealthBased( 450, 75));
 	}
 	
 	/**
