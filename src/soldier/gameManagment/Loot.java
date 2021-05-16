@@ -47,8 +47,8 @@ public class Loot {
         int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
         int rand2 = ThreadLocalRandom.current().nextInt(0, 1 + 1);
         int rand3 = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-        int x = ThreadLocalRandom.current().nextInt(0, Settings.SCENE_WIDTH + 1);
-        int y= ThreadLocalRandom.current().nextInt(0, Settings.SCENE_HEIGHT + 1);
+        int x = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING, Settings.SCENE_WIDTH + 1 -Settings.SCENE_PADDING);
+        int y= ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING, Settings.SCENE_HEIGHT + 1 -Settings.SCENE_PADDING);
         this.cost = ThreadLocalRandom.current().nextInt(1, 5 + 1);
         this.count = ThreadLocalRandom.current().nextInt(0, 3 + 1);
         this.dir = ThreadLocalRandom.current().nextInt(0, 3 + 1);
