@@ -123,7 +123,10 @@ public class Main extends Application {
 				//players.forEach(sprite -> sprite.updateUI(builder));
 				//player1.updateUI(builder);
 				players.forEach(player -> player.updateUI(builder));
+				loots.forEach(loot -> loot.updateUI(builder));
+
 				players.forEach(player -> player.count());
+				loots.forEach(loot -> loot.count());
 				//System.out.println("BOUCLE");
 				//players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
 				//player.updateUI();
@@ -167,8 +170,8 @@ public class Main extends Application {
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		humanImage =  new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		orcImage =    new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		swordImage =  new Image(getClass().getResource("/Equipment/sword.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		swordImage =  new Image(getClass().getResource("/Equipment/sword.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
+		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 
 
 		/* INITIALIZING GAME */

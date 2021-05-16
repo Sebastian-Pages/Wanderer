@@ -31,7 +31,7 @@ public class Loot {
         this.cost = cost;
         this.name = name;
         this.position = position;
-        this.hitbox = this.hitbox = new Circle(20);
+        this.hitbox = this.hitbox = new Circle(40);
         this.hitbox.setFill(Color.BEIGE);
         this.isRemovable = false;
         this.count = count;
@@ -63,7 +63,7 @@ public class Loot {
             this.equipment=fact.defenseWeapon();
             this.imageView = new ImageView(shieldImage);
         }
-        this.hitbox = new Circle(20);
+        this.hitbox = new Circle(40);
         this.hitbox.setFill(Color.BEIGE);
         this.isRemovable = false;
         this.position = new Position(x,y);
