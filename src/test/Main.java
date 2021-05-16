@@ -187,8 +187,6 @@ public class Main extends Application {
 		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
 		player2.add(age1.infantryUnit("orc"),orcImage);
 		player2.add(age1.infantryUnit("orc"),orcImage);
-		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),true);
-		player2.add(age1.infantryUnit("human"),humanWalkImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 
