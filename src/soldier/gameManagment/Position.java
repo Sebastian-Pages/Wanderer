@@ -26,7 +26,7 @@ public class Position {
     }
 
     public int distance(Position p){
-        System.out.println("hello: "+(int) Math.sqrt(  (x-p.getX())*(x-p.getX()) + (y-p.getY())*(y-p.getY())  ));
+        //System.out.println("hello: "+(int) Math.sqrt(  (x-p.getX())*(x-p.getX()) + (y-p.getY())*(y-p.getY())  ));
         return (int) Math.sqrt(  (x-p.getX())*(x-p.getX()) + (y-p.getY())*(y-p.getY())  );
     }
 

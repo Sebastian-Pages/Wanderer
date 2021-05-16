@@ -80,7 +80,7 @@ public class Main extends Application {
 			public void handle(long now) {
 				processInput(input, now);
 				try {
-					Thread.sleep(50);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -116,6 +116,8 @@ public class Main extends Application {
 				//players.forEach(sprite -> sprite.updateUI(builder));
 				//player1.updateUI(builder);
 				players.forEach(player -> player.updateUI(builder));
+				System.out.println("BOUCLE");
+				players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
 				//player.updateUI();
 				//castles.forEach(sprite -> sprite.updateUI());
 				//units.forEach(sprite -> sprite.updateUI());
@@ -174,16 +176,17 @@ public class Main extends Application {
 
 		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100),true);
 		player1.add(age1.infantryUnit("human"),humanImage);
+		player1.add(age1.infantryUnit("human"),humanImage);
 		player1.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player1);
 		player1.addToLayer(builder);
 
-		Player player2 = new Player(playfieldLayer,"Patrick",0,new Position(500,500),new Position(500,500),true);
+		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),true);
 		player2.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 
-		Player player3 = new Player(playfieldLayer,"Patrick",0,new Position(500,700),new Position(500,700),true);
+		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),true);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);

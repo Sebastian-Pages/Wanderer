@@ -7,14 +7,49 @@ import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
 import soldier.gameManagment.Position;
+import soldier.gameManagment.Settings;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class JFXBuilder implements DisplayBuilder {
     @Override
-    public void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageView) {
-        imageView.relocate(p.getX()+36*rank, p.getY());
+    public void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageView, int size) {
+        int rows = 3;
+        int cols = size/rows +1;
+
+        if (size == 1){
+            imageView.relocate(p.getX()- Settings.UNIT_SIZE/2, p.getY()- Settings.UNIT_SIZE/2);
+            System.out.println("  size: "+size);
+        }
+        if (size == 2){
+            imageView.relocate(p.getX()- Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_SIZE/2);
+            System.out.println(" size: "+size);
+        }
+        //cols/(rank+1) x
+        if (size == 3){
+            if (rank <2) {
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET/2);
+            }
+            if (rank == 2) {
+                System.out.println(" DEBUG: ");
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET/2, p.getY() + Settings.UNIT_OFFSET/2);
+            }
+            System.out.println(" size: "+size+" rows: "+rows+" cols: "+cols+" test: "+rank);
+        }
+
+        if (size == 4){
+            if (rank < 2)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + rank*Settings.UNIT_OFFSET, p.getY()- Settings.UNIT_OFFSET);
+            if (rank > 1)
+                imageView.relocate(p.getX() - Settings.UNIT_OFFSET + (rank-2)*Settings.UNIT_OFFSET, p.getY());
+        }
+
+        if (size > 4){
+            //int xoffset = 36 * (rank % rows) - (Math.min(rows, 2) * 32 / 2);
+            //int yoffset = 36 * (rank / (cols + 1)) - (36 * cols / 2);
+            imageView.relocate(p.getX()+32*rank , p.getY() );
+        }
     }
 
     @Override
@@ -28,11 +63,11 @@ public class JFXBuilder implements DisplayBuilder {
     }
 
     @Override
-    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox) {
+    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox,int size) {
         hitbox.relocate(p.getX()-hitbox.getRadius(),p.getY()-hitbox.getRadius());
         int rank = 0;
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
-            updateUnit(it.next(),p,rank,layer, imageViews.get(rank));
+            updateUnit(it.next(),p,rank,layer, imageViews.get(rank),size);
             ++rank;
         }
     }

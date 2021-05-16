@@ -18,7 +18,8 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
-    private float speed= 5;
+    private float speed= 15;
+    private int size = 0;
     private Circle hitbox;
     private boolean isRemovable = false;
 
@@ -61,18 +62,21 @@ public class Player {
         this.army.addUnit(u);
         this.imageViews.add(new ImageView(image));
         this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
+        this.size += 1;
     }
 
     public void add(Unit u ,ImageView imageView){
         this.army.addUnit(u);
         this.imageViews.add(imageView);
         this.hitbox.setRadius(hitbox.getRadius()+Settings.UNIT_SIZE/2);
+        this.size += 1;
     }
 
     public void remove(Unit u,ImageView imageView){
         this.army.removeUnit(u);
         this.imageViews.remove(imageView);
         this.hitbox.setRadius(hitbox.getRadius()-Settings.UNIT_SIZE/2);
+        this.size -= 1;
     }
 
     public void addToLayer(DisplayBuilder builder) {
@@ -86,7 +90,8 @@ public class Player {
     }
 
     public void updateUI(DisplayBuilder builder) {
-        builder.updateUnitGroup(army,position, layer,imageViews,hitbox);
+        builder.updateUnitGroup(army,position, layer,imageViews,hitbox,size);
+
         //imageView.relocate(position.x, position.y);
     }
 
@@ -144,6 +149,10 @@ public class Player {
 
     public List<ImageView> getImageViews() {
         return imageViews;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public boolean isAlly() {
