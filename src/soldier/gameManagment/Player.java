@@ -53,8 +53,8 @@ public class Player {
 
     public Player(Pane layer,Image BikermanImage,Image CenturionImage,Image HorsemanImage,Image RobotImage) {
         int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
-        int x = ThreadLocalRandom.current().nextInt(0, Settings.SCENE_WIDTH + 1);
-        int y= ThreadLocalRandom.current().nextInt(0, Settings.SCENE_HEIGHT + 1);
+        int x = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING, Settings.SCENE_WIDTH + 1 - Settings.SCENE_PADDING);
+        int y= ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING, Settings.SCENE_HEIGHT + 1 - Settings.SCENE_PADDING);
         this.name = "Random Player";
         this.score = 0;
         this.layer=layer;
