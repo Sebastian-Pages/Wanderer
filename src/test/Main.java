@@ -12,9 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,6 +52,8 @@ public class Main extends Application {
 	private Map map;
 	private DisplayBuilder builder;
 	private boolean pauseState = false;
+	private boolean isGameOver = true;
+
 
 
 	/** IMAGES **/
@@ -63,6 +65,8 @@ public class Main extends Application {
 	private Image shieldImage;
 	private Image potionImage;
 	private Image mapImage;
+	private Image frontImage;
+	private ImageView frontImageView;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -163,6 +167,12 @@ public class Main extends Application {
 				//update();
 				//castles.forEach(castle -> castle.update());
 				//checkIfGameOver();
+				//UILayer.getChildren().a
+				playfieldLayer.getChildren().remove(frontImageView);
+				playfieldLayer.getChildren().add(frontImageView);
+
+				if (isGameOver)
+					gameOver();
 			}
 
 			private void processInput(Input input, long now) {
@@ -191,6 +201,7 @@ public class Main extends Application {
 		potionImage = new Image(getClass().getResource("/Equipment/potion.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 
 		mapImage = new Image(getClass().getResource("/background1.png").toExternalForm(), Settings.SCENE_WIDTH, Settings.SCENE_WIDTH, true, true);
+		frontImage = new Image(getClass().getResource("/frontground1.png").toExternalForm(), Settings.SCENE_WIDTH, Settings.SCENE_WIDTH, true, true);
 
 
 		/* INITIALIZING GAME */
@@ -251,7 +262,8 @@ public class Main extends Application {
 		players.add(player4);
 		player4.addToLayer(builder);
 
-
+		frontImageView = new ImageView(frontImage);
+		playfieldLayer.getChildren().add(frontImageView);
 
 		scene.setOnKeyTyped(ke ->{
 			if(input.isPaused()) {
@@ -329,7 +341,7 @@ public class Main extends Application {
 			player1.removeFromLayer(builder);
 			player1.setIsRemovable(true);
 			player.updateArmy();
-			gameOver();
+			isGameOver=true;
 			//Ajout Image game over
 		}
 	}
@@ -377,16 +389,19 @@ public class Main extends Application {
 	}
 
 	private void gameOver(){
-		HBox hbox = new HBox();
-		hbox.setPrefSize(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-		//hbox.getStyleClass().add("message");
+
 		Text message = new Text();
 		message.getStyleClass().add("message");
-		message.setText("Game over");
+		message.setText("Game Over");
 		message.setFont(Font.font ("Impact", FontWeight.BOLD, 200));
 		message.setFill(Color.ORANGE);
-		hbox.getChildren().add(message);
-		root.getChildren().add(hbox);
+		message.setX(Settings.SCENE_WIDTH /2-400);
+		message.setY(Settings.SCENE_HEIGHT/2);
+		Rectangle r = new Rectangle(0,0,Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
+		r.setFill(Color.rgb(0,0,0,0.7));
+		UILayer.getChildren().add(r);
+		UILayer.getChildren().add(message);
+
 		gameLoop.stop();
 	}
 
