@@ -31,6 +31,7 @@ import javafx.animation.AnimationTimer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main extends Application {
 
@@ -52,7 +53,8 @@ public class Main extends Application {
 	private Map map;
 	private DisplayBuilder builder;
 	private boolean pauseState = false;
-	private boolean isGameOver = true;
+	private boolean isGameOver = false;
+	private long nextCall=0;
 
 
 
@@ -119,55 +121,32 @@ public class Main extends Application {
 
 				/** MOVEMENTS **/
 				players.forEach(player -> player.move());
-				//enemies.forEach(sprite -> sprite.move());
-				//missiles.forEach(sprite -> sprite.move());
-				//units.forEach(sprite -> sprite.move());
-				//osts.forEach(sprite -> sprite.move());
 
 				/** AI **/
-				//AI();
+				AI();
 
 				/** CHECK COLLISIONS **/
 				checkCollisions();
 
-				//checkOrders();
-				//checkSiege();
-				//checkSieges();
 
 				/** UPDATE SPRITES IN SCENE **/
-				//players.forEach(sprite -> sprite.updateUI(builder));
-				//player1.updateUI(builder);
+
 				players.forEach(player -> player.updateUI(builder));
 				loots.forEach(loot -> loot.updateUI(builder));
 
 				players.forEach(player -> player.count());
 				loots.forEach(loot -> loot.count());
 				builder.updateUI(playfieldLayer,UILayer,players,loots,player1);
-				//System.out.println("BOUCLE");
-				//players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
-				//player.updateUI();
-				//castles.forEach(sprite -> sprite.updateUI());
-				//units.forEach(sprite -> sprite.updateUI());
-				//osts.forEach(sprite -> sprite.updateUI());
 
 				/** CHECK IF SPRITE CAN BE REMOVED **/
-				//castles.forEach(sprite -> sprite.checkRemovability());
-				//units.forEach(sprite -> sprite.checkRemovability());
-				//osts.forEach(sprite -> sprite.checkRemovability());
 
 				/** REMOVE REMOVABLES FROM LIST LAYER ETC **/
 				removePlayers();
 				removeLoots();
-				//removeSprites(castles);
-				//removeSprites(units);
-				//removeSprites(osts);
 
 
 				/** UPDATE SCORE HEALTH ETC**/
-				//update();
-				//castles.forEach(castle -> castle.update());
-				//checkIfGameOver();
-				//UILayer.getChildren().a
+
 				playfieldLayer.getChildren().remove(frontImageView);
 				playfieldLayer.getChildren().add(frontImageView);
 
@@ -185,8 +164,6 @@ public class Main extends Application {
 		};
 		gameLoop.start();
 	}
-
-
 
 	private void loadGame() {
 		/* LOAD IMAGES */
@@ -387,6 +364,18 @@ public class Main extends Application {
 			}
 		}
 	}
+
+	private void AI() {
+		if (System.currentTimeMillis() > nextCall) {
+			long lastCall = System.currentTimeMillis();
+			nextCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(2000, 3000 + 1);
+			int number = ThreadLocalRandom.current().nextInt(1, players.size() + 1);
+			int randX = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_X, Settings.SCENE_WIDTH - Settings.SCENE_PADDING_X);
+			int randY = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_Y, Settings.SCENE_HEIGHT- Settings.SCENE_PADDING_Y);
+			players.get(number).setDestination(new Position(randX, randY));
+		}
+	}
+
 
 	private void gameOver(){
 

@@ -13,4 +13,6 @@ public class Settings {
     public static final int EQUIPMENT_SPRITE_OFFSET = 23;
     public static final int NUMBER_OF_INITIAL_PLAYERS = 5;
 
+    public static final int SCENE_PADDING_X = 60;
+    public static final int SCENE_PADDING_Y = 100;
 }
