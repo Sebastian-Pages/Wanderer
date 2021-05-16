@@ -177,8 +177,11 @@ public class Main extends Application {
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		centurionImage =  new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		HorsemanImage =    new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		centurionImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		HorsemanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		BikermanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+
 		swordImage =  new Image(getClass().getResource("/Equipment/sword.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 		potionImage = new Image(getClass().getResource("/Equipment/potion.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
@@ -199,14 +202,14 @@ public class Main extends Application {
 		//player1.addImageView(new ImageView(orcImage));
 		//player1.addToLayer(builder);
 
-		player1 = new Player(playfieldLayer,"Patrick",0,new Position(100,100),new Position(100,100),true);
+		player1 = new Player(playfieldLayer,"Patrick",5,new Position(100,100),new Position(100,100),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player1);
 		player1.addToLayer(builder);
 
-		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
+		/*Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
 		player2.add(age1.infantryUnit("orc"), HorsemanImage);
 		player2.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player2);
@@ -220,7 +223,7 @@ public class Main extends Application {
 		player3.add(age1.infantryUnit("human"), centurionImage);
 		player3.add(age1.infantryUnit("human"), centurionImage);
 		players.add(player3);
-		player3.addToLayer(builder);
+		player3.addToLayer(builder);*/
 
 		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 		loot1.addToLayer(builder);
@@ -228,6 +231,18 @@ public class Main extends Application {
 		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 		loot2.addToLayer(builder);
 		loots.add(loot2);
+
+		Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+		players.add(player2);
+		player2.addToLayer(builder);
+
+		Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+		players.add(player3);
+		player3.addToLayer(builder);
+
+		Player player4 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+		players.add(player4);
+		player4.addToLayer(builder);
 
 
 
@@ -252,7 +267,9 @@ public class Main extends Application {
 
 	private void checkCollisionLoot(Loot loot) {
 		if (loot.getPosition().distance(player1.getPosition())<loot.getRadius()+ player1.getRadius())
-			pickUpLoot(loot);
+			if(player1.getScore() - loot.getCost() >= 0){
+				pickUpLoot(loot);
+			}
 	}
 
 	private void pickUpLoot(Loot loot) {
@@ -283,7 +300,6 @@ public class Main extends Application {
 
 	private void fight(Player player) {
 		int round = 0;
-		player1.setScore(player.getScore()+100);
 		Unit team1 = player1.getArmy();
 		Unit team2 = player.getArmy();
 		while(team1.alive() && team2.alive()) {
@@ -301,6 +317,7 @@ public class Main extends Application {
 			player.removeFromLayer(builder);
 			player.setIsRemovable(true);
 			player1.updateArmy();
+			player1.setScore(player1.getScore()+player.getSize());
 		}else{
 			player1.removeFromLayer(builder);
 			player1.setIsRemovable(true);
