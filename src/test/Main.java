@@ -89,7 +89,8 @@ public class Main extends Application {
 		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if ((event.getX()<Settings.SCENE_WIDTH-Settings.SCENE_PADDING)&&(event.getX()>Settings.SCENE_PADDING));
+				if (((event.getX()<Settings.SCENE_WIDTH-Settings.SCENE_PADDING_X)&&(event.getX()>Settings.SCENE_PADDING_X))
+					&&((event.getY()<Settings.SCENE_HEIGHT-Settings.SCENE_PADDING_Y)&&(event.getY()>Settings.SCENE_PADDING_Y)))
 					player1.setDestination(new Position((int) event.getX(),(int) event.getY() ));
 			}
 		});
