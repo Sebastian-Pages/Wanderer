@@ -48,6 +48,7 @@ public class Main extends Application {
 
 	/** IMAGES **/
 	private Image humanImage;
+	private Image humanWalkImage;
 	private Image orcImage;
 
 	@Override
@@ -116,8 +117,9 @@ public class Main extends Application {
 				//players.forEach(sprite -> sprite.updateUI(builder));
 				//player1.updateUI(builder);
 				players.forEach(player -> player.updateUI(builder));
-				System.out.println("BOUCLE");
-				players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
+				players.forEach(player -> player.count());
+				//System.out.println("BOUCLE");
+				//players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
 				//player.updateUI();
 				//castles.forEach(sprite -> sprite.updateUI());
 				//units.forEach(sprite -> sprite.updateUI());
@@ -156,8 +158,9 @@ public class Main extends Application {
 
 	private void loadGame() {
 		/* LOAD IMAGES */
-		humanImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseFixe.png").toExternalForm(), Settings.UNIT_SIZE, Settings.UNIT_SIZE, true, true);
-		orcImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseFixe.png").toExternalForm(), Settings.UNIT_SIZE, Settings.UNIT_SIZE, true, true);
+		humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		humanImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		orcImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 
 		/* INITIALIZING GAME */
 		input = new Input(scene);
@@ -182,8 +185,7 @@ public class Main extends Application {
 		player1.addToLayer(builder);
 
 		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),true);
-		player2.add(age1.infantryUnit("orc"),orcImage);
-		player2.add(age1.infantryUnit("orc"),orcImage);
+		player2.add(age1.infantryUnit("human"),humanWalkImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 

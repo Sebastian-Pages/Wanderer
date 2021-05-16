@@ -18,10 +18,12 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
-    private float speed= 15;
+    private float speed= 2;
     private int size = 0;
     private Circle hitbox;
     private boolean isRemovable = false;
+    private int count=0;
+    private int dir = 0;
 
 
 
@@ -89,7 +91,7 @@ public class Player {
     }
 
     public void updateUI(DisplayBuilder builder) {
-        builder.updateUnitGroup(army,position, layer,imageViews,hitbox,size);
+        builder.updateUnitGroup(army,position, layer,imageViews,hitbox,size,count,getDir());
 
         //imageView.relocate(position.x, position.y);
     }
@@ -164,5 +166,31 @@ public class Player {
 
     public void setIsRemovable(boolean removable) {
         this.isRemovable = removable;
+    }
+
+    public int getDir(){
+        if (position.getX() < destination.getX()){
+            if(position.getY() <= destination.getY()){
+                dir=0;
+            }
+            else{
+                dir=2;
+            }
+        }
+        else{
+            if(position.getY() <= destination.getY()){
+                dir=1;
+            }
+            else{
+                dir=3;
+            }
+        }
+        return dir;
+    }
+
+    public void count(){
+        this.count+=1;
+        if (count > 39)
+            count =0;
     }
 }

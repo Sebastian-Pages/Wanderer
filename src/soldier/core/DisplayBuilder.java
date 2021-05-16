@@ -10,16 +10,11 @@ import soldier.gameManagment.Position;
 import java.util.List;
 
 public interface DisplayBuilder {
-    void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageview, int size);
+    void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageview, int size, int count,int dir);
     void addUnitToLayer(Pane layer, ImageView imageView);
     void removeUnitFromLayer(Pane layer, ImageView imageView);
 
-    void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox, int size);
+    void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox, int size,int count,int dir);
     void addUnitGroupToLayer(UnitGroup a,Pane layer, List<ImageView> imageViews, Circle hitbox);
     void removeUnitGroupFromLayer(UnitGroup a,Pane layer, List<ImageView> imageViews, Circle hitbox);
-
-
-    //void displayUnitGroup(UnitGroup a, Position p);
-
-
 }
