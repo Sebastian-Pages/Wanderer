@@ -149,7 +149,6 @@ public class Main extends Application {
 				//update();
 				//castles.forEach(castle -> castle.update());
 				//checkIfGameOver();
-				gameOver();
 			}
 
 			private void processInput(Input input, long now) {
@@ -268,7 +267,7 @@ public class Main extends Application {
 			player1.removeFromLayer(builder);
 			player1.setIsRemovable(true);
 			player.updateArmy();
-			gameLoop.stop();
+			gameOver();
 			//Ajout Image game over
 		}
 	}
