@@ -42,9 +42,9 @@ public class Player {
         this.hitbox = new Circle(20);
         this.isAlly = isAlly;
         if(isAlly)
-            hitbox.setFill(Color.PALEGREEN);
+            hitbox.setFill(Color.rgb(152,251,152,0.4));
         else
-            hitbox.setFill(Color.SALMON);
+            hitbox.setFill(Color.rgb(250,128,114,0.4));
         this.layer = layer;
         this.imageViews = new ArrayList<>();
 
@@ -68,9 +68,9 @@ public class Player {
             this.isAlly = false;
         }
         if(isAlly)
-            hitbox.setFill(Color.PALEGREEN);
+            hitbox.setFill(Color.rgb(152,251,152,0.4));
         else
-            hitbox.setFill(Color.SALMON);
+            hitbox.setFill(Color.rgb(250,128,114,0.4));
         this.isRemovable = false;
         this.position = new Position(x,y);
         this.destination = this.position;

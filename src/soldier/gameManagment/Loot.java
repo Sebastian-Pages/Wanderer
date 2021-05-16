@@ -71,7 +71,7 @@ public class Loot {
             this.cost=0;
         }
         this.hitbox = new Circle(40);
-        this.hitbox.setFill(Color.BEIGE);
+        this.hitbox.setFill(Color.rgb(253,241,184,0.4));
         this.isRemovable = false;
         this.position = new Position(x,y);
     }
