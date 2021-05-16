@@ -10,6 +10,7 @@ import soldier.core.Unit;
 import soldier.core.UnitGroup;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player {
@@ -47,6 +48,16 @@ public class Player {
         this.layer = layer;
         this.imageViews = new ArrayList<>();
 
+    }
+
+    public void updateArmy(){
+        int rank = 0;
+        for (Iterator<Unit> it = this.getArmy().subUnits(); it.hasNext(); ) {
+            Unit u = it.next();
+            if(!u.alive()){
+                this.remove(u,this.getImageViews().get(rank));
+            }
+        }
     }
 
     public void move(){
