@@ -116,8 +116,8 @@ public class Main extends Application {
 				//players.forEach(sprite -> sprite.updateUI(builder));
 				//player1.updateUI(builder);
 				players.forEach(player -> player.updateUI(builder));
-				System.out.println("BOUCLE");
-				players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
+				//System.out.println("BOUCLE");
+				//players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
 				//player.updateUI();
 				//castles.forEach(sprite -> sprite.updateUI());
 				//units.forEach(sprite -> sprite.updateUI());
@@ -181,13 +181,13 @@ public class Main extends Application {
 		players.add(player1);
 		player1.addToLayer(builder);
 
-		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),true);
+		Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
 		player2.add(age1.infantryUnit("orc"),orcImage);
 		player2.add(age1.infantryUnit("orc"),orcImage);
 		players.add(player2);
 		player2.addToLayer(builder);
 
-		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),true);
+		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),false);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
 		player3.add(age1.infantryUnit("human"),humanImage);
@@ -234,7 +234,26 @@ public class Main extends Application {
 	}
 
 	private void fight(Player player) {
-
+		int round = 0;
+		Unit team1 = player1.getArmy();
+		Unit team2 = player.getArmy();
+		while(team1.alive() && team2.alive()) {
+			System.out.println("Round  #" + round++);
+			float st1 = team1.strike();
+			System.out.println(team1.getName() + " attack with force : " + st1);
+			team2.parry(st1);
+			float st2 = team2.strike();
+			System.out.println(team2.getName() + " attack with force : " + st2);
+			team1.parry(st2);
+		}
+		System.out.println("The end ... " + (team1.alive() ? team1.getName() : team2.getName()) + " won." );
+		if(team1.alive()){
+			player.removeFromLayer(builder);
+			player.setIsRemovable(true);
+		}else{
+			player1.removeFromLayer(builder);
+			player1.setIsRemovable(true);
+		}
 	}
 
 	private void merge(Player player) {
