@@ -17,4 +17,10 @@ public interface DisplayBuilder {
     void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox, int size,int count,int dir);
     void addUnitGroupToLayer(UnitGroup a,Pane layer, List<ImageView> imageViews, Circle hitbox);
     void removeUnitGroupFromLayer(UnitGroup a,Pane layer, List<ImageView> imageViews, Circle hitbox);
+
+    void addEquipmentToLayer(Pane layer, ImageView imageView, Circle hitbox);
+
+    void removeEquipmentFromLayer(Pane layer, ImageView imageView, Circle hitbox);
+
+    void updateEquipment(Position position, Pane layer, ImageView imageView, Circle hitbox, int count, int dir);
 }

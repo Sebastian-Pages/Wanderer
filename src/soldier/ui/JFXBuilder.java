@@ -135,4 +135,26 @@ public class JFXBuilder implements DisplayBuilder {
         }
     }
 
+    @Override
+    public void addEquipmentToLayer(Pane layer, ImageView imageView, Circle hitbox) {
+        layer.getChildren().add(hitbox);
+        layer.getChildren().add(imageView);
+    }
+
+    @Override
+    public void removeEquipmentFromLayer(Pane layer, ImageView imageView, Circle hitbox) {
+        layer.getChildren().remove(imageView);
+        layer.getChildren().remove(hitbox);
+    }
+
+    @Override
+    public void updateEquipment(Position p, Pane layer, ImageView imageView, Circle hitbox, int count, int dir) {
+        int offsetx = (count/10)*128;
+        int offsety = dir*128;
+        //System.out.println("offstes"+offsetx);
+        imageView.setViewport(new Rectangle2D(offsetx, offsety, 128, 128));
+        imageView.relocate(p.getX()  - Settings.SPRITE_OFFSET, p.getY() - Settings.SPRITE_OFFSET);
+
+    }
+
 }

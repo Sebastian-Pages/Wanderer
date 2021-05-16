@@ -47,7 +47,8 @@ public class Main extends Application {
 	private Input input;
 
 	/** GAME VARIABLES **/
-	private List<Player> players = new ArrayList<>();;
+	private List<Player> players = new ArrayList<>();
+	private List<Loot> loots = new ArrayList<>();;
 	private Player player1;
 	private Map map;
 	private DisplayBuilder builder;
@@ -56,8 +57,9 @@ public class Main extends Application {
 
 	/** IMAGES **/
 	private Image humanImage;
-	private Image humanWalkImage;
 	private Image orcImage;
+	private Image swordImage;
+	private Image shieldImage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -167,9 +169,12 @@ public class Main extends Application {
 
 	private void loadGame() {
 		/* LOAD IMAGES */
-		humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		humanImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		orcImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		swordImage = new Image(getClass().getResource("/sword.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		shieldImage = new Image(getClass().getResource("/shield.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+
 
 		/* INITIALIZING GAME */
 		input = new Input(scene);
@@ -208,6 +213,10 @@ public class Main extends Application {
 		player3.add(age1.infantryUnit("human"),humanImage);
 		players.add(player3);
 		player3.addToLayer(builder);
+
+		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage);
+		loot1.addToLayer(builder);
+		loots.add(loot1);
 
 
 
