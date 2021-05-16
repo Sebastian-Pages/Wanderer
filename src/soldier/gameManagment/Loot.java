@@ -43,6 +43,7 @@ public class Loot {
     public  Loot(Pane layer, Image shieldImage, Image swordImage){
         AgeAbstractFactory fact;
         this.name = "Random Equipment";
+        this.layer=layer;
         int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
         int x = ThreadLocalRandom.current().nextInt(0, Settings.SCENE_WIDTH + 1);
         int y= ThreadLocalRandom.current().nextInt(0, Settings.SCENE_HEIGHT + 1);
@@ -62,7 +63,7 @@ public class Loot {
             this.equipment=fact.defenseWeapon();
             this.imageView = new ImageView(shieldImage);
         }
-        this.hitbox = this.hitbox = new Circle(20);
+        this.hitbox = new Circle(20);
         this.hitbox.setFill(Color.BEIGE);
         this.isRemovable = false;
         this.position = new Position(x,y);
