@@ -19,7 +19,7 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
-    private float speed= 2;
+    private float speed= 8;
     private int size = 0;
     private Circle hitbox;
     private boolean isRemovable = false;
@@ -61,14 +61,23 @@ public class Player {
     }
 
     public void move(){
+        int delta_x = position.getX() - destination.getX();
+        int delta_y = position.getY() - destination.getY();
+        double theta_radians = Math.toDegrees(Math.atan2(delta_y, delta_x));
+        System.out.println("______________________________");
+        System.out.println("angle: "+ theta_radians);
+        double speedX = Math.abs(Math.cos(Math.toRadians(theta_radians))*speed);
+        double speedY = Math.abs(Math.sin(Math.toRadians(theta_radians)) * speed);
+        System.out.println("speedX: "+ speedX+" speedY: "+ speedY);
+
         if (position.getX() < destination.getX())
-            position.setX(position.getX()+(int)speed);
+            position.setX(position.getX()+(int)speedX);
         if (position.getX() > destination.getX())
-            position.setX(position.getX()-(int)speed);
+            position.setX(position.getX()-(int)speedX);
         if (position.getY() < destination.getY())
-            position.setY(position.getY()+(int)speed);
+            position.setY(position.getY()+(int)speedY);
         if (position.getY() > destination.getY())
-            position.setY(position.getY()-(int)speed);
+            position.setY(position.getY()-(int)speedY);
     }
 
     public void add(Unit u ,Image image) {
@@ -203,5 +212,9 @@ public class Player {
         this.count+=1;
         if (count > 39)
             count =0;
+    }
+
+    public void addEquipment(Loot loot) {
+        army.addEquipment(loot.getEquipment());
     }
 }

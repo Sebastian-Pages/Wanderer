@@ -150,7 +150,7 @@ public class JFXBuilder implements DisplayBuilder {
     @Override
     public void updateEquipment(Position p, Pane layer, ImageView imageView, Circle hitbox, int count, int dir) {
         hitbox.relocate(p.getX()-hitbox.getRadius(),p.getY()-hitbox.getRadius());
-        System.out.println("DEBUG: "+p.getX()+" "+p.getY());
+        //System.out.println("DEBUG: "+p.getX()+" "+p.getY());
         int offsetx = (count/10)*128/2;
         int offsety = dir*128/2;
         //System.out.println("offstes"+offsetx);

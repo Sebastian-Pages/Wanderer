@@ -85,6 +85,26 @@ public class Loot {
         //imageView.relocate(position.x, position.y);
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public int getRadius(){
+        return (int) this.hitbox.getRadius();
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public boolean isRemovable() {
+        return isRemovable;
+    }
+
+    public void setIsRemovable(boolean removable) {
+        this.isRemovable = removable;
+    }
+
     public void count(){
         this.count+=1;
         if (count > 39)

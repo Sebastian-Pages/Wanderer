@@ -141,6 +141,7 @@ public class Main extends Application {
 
 				/** REMOVE REMOVABLES FROM LIST LAYER ETC **/
 				removePlayers();
+				removeLoots();
 				//removeSprites(castles);
 				//removeSprites(units);
 				//removeSprites(osts);
@@ -233,10 +234,22 @@ public class Main extends Application {
 	}
 
 	private void checkCollisions() {
-		players.forEach(player -> checkCollision(player));
+		players.forEach(player -> checkCollisionPlayers(player));
+		loots.forEach(loot -> checkCollisionLoot(loot));
 	}
 
-	private void checkCollision(Player player) {
+	private void checkCollisionLoot(Loot loot) {
+		if (loot.getPosition().distance(player1.getPosition())<loot.getRadius()+ player1.getRadius())
+			pickUpLoot(loot);
+	}
+
+	private void pickUpLoot(Loot loot) {
+		player1.addEquipment(loot);
+		//loot.removeFromLayer(builder);
+		loot.setIsRemovable(true);
+	}
+
+	private void checkCollisionPlayers(Player player) {
 		if (player.equals(player1))
 			return;
 		else
@@ -305,6 +318,18 @@ public class Main extends Application {
 				// p.removeFromLayer();
 				// remove from list
 				System.out.println(p.toString()+" removed");
+				iter.remove();
+			}
+		}
+	}
+
+	private void removeLoots() {
+		Iterator<Loot> iter = loots.iterator();
+		while (iter.hasNext()) {
+			Loot loot = iter.next();
+
+			if (loot.isRemovable()) {
+				loot.removeFromLayer(builder);
 				iter.remove();
 			}
 		}
