@@ -5,6 +5,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import soldier.ages.AgeFutureFactory;
+import soldier.ages.AgeMiddleFactory;
+import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
@@ -12,6 +15,7 @@ import soldier.core.UnitGroup;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Player {
     private String name;
@@ -44,6 +48,60 @@ public class Player {
         this.layer = layer;
         this.imageViews = new ArrayList<>();
 
+    }
+
+
+    public Player(Pane layer,Image BikermanImage,Image CenturionImage,Image HorsemanImage,Image RobotImage) {
+        int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+        int x = ThreadLocalRandom.current().nextInt(0, Settings.SCENE_WIDTH + 1);
+        int y= ThreadLocalRandom.current().nextInt(0, Settings.SCENE_HEIGHT + 1);
+        this.name = "Random Player";
+        this.score = 0;
+        this.layer=layer;
+        this.count = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+        this.dir = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+        this.hitbox = new Circle(40);
+        if ( (rand & 1) == 0 ){
+            this.isAlly = true;
+        }
+        else{
+            this.isAlly = false;
+        }
+        if(isAlly)
+            hitbox.setFill(Color.PALEGREEN);
+        else
+            hitbox.setFill(Color.SALMON);
+        this.isRemovable = false;
+        this.position = new Position(x,y);
+        this.destination = this.position;
+        this.imageViews = new ArrayList<>();
+        this.army = new UnitGroup("randomArmy");
+        this.randomAdd(BikermanImage,CenturionImage,HorsemanImage,RobotImage);
+    }
+
+    public void randomAdd(Image BikermanImage,Image CenturionImage,Image HorsemanImage,Image RobotImage){
+        int randNbSoldier = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+        for(int i=0;i<randNbSoldier;++i){
+            AgeAbstractFactory fact;
+            int randAge = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+            if ( (randAge & 1) == 0 )
+                fact = new AgeMiddleFactory();
+            else
+                fact = new AgeFutureFactory();
+
+            int randSoldier = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+
+            if ( (randSoldier & 1) == 0 ){
+                this.add(fact.riderUnit("rider"),BikermanImage);
+            } else if((randSoldier & 1) == 1){
+                this.add(fact.infantryUnit("centurion"),CenturionImage);
+            } else if((randSoldier & 1) == 2){
+                this.add(fact.riderUnit("horseman"),HorsemanImage);
+            }else{
+                this.add(fact.infantryUnit("Robot"),RobotImage);
+            }
+
+        }
     }
 
     public void updateArmy(){
