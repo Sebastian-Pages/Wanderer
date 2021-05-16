@@ -11,7 +11,7 @@ import soldier.core.Equipment;
 public class UnitCenturion extends UnitInfantry {
 
 	public UnitCenturion(String soldierName) {
-		super(soldierName, new BehaviorSoldierStd(200, 150));
+		super(soldierName, new BehaviorSoldierStd(200, 37));
 	}
 
 	/**
