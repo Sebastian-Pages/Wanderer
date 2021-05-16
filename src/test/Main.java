@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import soldier.ages.AgeMiddleFactory;
@@ -38,6 +39,7 @@ public class Main extends Application {
 	private Scene scene;
 	private AnimationTimer gameLoop;
 	private Pane playfieldLayer;
+	private Pane UILayer;
 	private Group root;
 
 	private Input input;
@@ -68,7 +70,9 @@ public class Main extends Application {
 		primaryStage.show();
 
 		playfieldLayer = new Pane();
+		UILayer = new Pane();
 		root.getChildren().add(playfieldLayer);
+		root.getChildren().add(UILayer);
 
 		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -127,6 +131,7 @@ public class Main extends Application {
 
 				players.forEach(player -> player.count());
 				loots.forEach(loot -> loot.count());
+				builder.updateUI(playfieldLayer,UILayer,players,loots,player1);
 				//System.out.println("BOUCLE");
 				//players.forEach(player -> System.out.println(player.getName()+" size: "+player.getSize()));
 				//player.updateUI();
@@ -216,6 +221,9 @@ public class Main extends Application {
 		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage);
 		loot1.addToLayer(builder);
 		loots.add(loot1);
+		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage);
+		loot2.addToLayer(builder);
+		loots.add(loot2);
 
 
 
@@ -245,6 +253,7 @@ public class Main extends Application {
 
 	private void pickUpLoot(Loot loot) {
 		player1.addEquipment(loot);
+		player1.setScore(player1.getScore()-loot.getCost());
 		//loot.removeFromLayer(builder);
 		loot.setIsRemovable(true);
 	}
@@ -267,6 +276,7 @@ public class Main extends Application {
 
 	private void fight(Player player) {
 		int round = 0;
+		player1.setScore(player.getScore()+100);
 		Unit team1 = player1.getArmy();
 		Unit team2 = player.getArmy();
 		while(team1.alive() && team2.alive()) {
@@ -342,7 +352,7 @@ public class Main extends Application {
 		Text message = new Text();
 		message.getStyleClass().add("message");
 		message.setText("Game over");
-		message.setFont(Font.font ("Impact", 200));
+		message.setFont(Font.font ("Impact", FontWeight.BOLD, 200));
 		message.setFill(Color.ORANGE);
 		hbox.getChildren().add(message);
 		root.getChildren().add(hbox);

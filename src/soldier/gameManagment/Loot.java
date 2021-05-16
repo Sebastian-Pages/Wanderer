@@ -97,6 +97,10 @@ public class Loot {
         return equipment;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
     public boolean isRemovable() {
         return isRemovable;
     }

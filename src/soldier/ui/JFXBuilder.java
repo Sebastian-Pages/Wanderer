@@ -2,11 +2,19 @@ package soldier.ui;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
+import soldier.gameManagment.Loot;
+import soldier.gameManagment.Player;
 import soldier.gameManagment.Position;
 import soldier.gameManagment.Settings;
 
@@ -100,8 +108,9 @@ public class JFXBuilder implements DisplayBuilder {
     }
 
     @Override
-    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox, int size, int count,int dir) {
+    public void updateUnitGroup(UnitGroup a, Position p, Pane layer, List<ImageView> imageViews, Circle hitbox, int size, int count, int dir) {
         hitbox.relocate(p.getX()-hitbox.getRadius(),p.getY()-hitbox.getRadius());
+
         int rank = 0;
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
             updateUnit(it.next(),p,rank,layer, imageViews.get(rank),size,count,dir);
@@ -157,6 +166,35 @@ public class JFXBuilder implements DisplayBuilder {
         imageView.setViewport(new Rectangle2D(offsetx, offsety, 64, 64));
         imageView.relocate(p.getX()  - Settings.EQUIPMENT_SPRITE_OFFSET - Settings.EQUIPMENT_SPRITE_OFFSET/2, p.getY() - Settings.EQUIPMENT_SPRITE_OFFSET - Settings.EQUIPMENT_SPRITE_OFFSET/2);
 
+    }
+
+    @Override
+    public void updateUI(Pane playfieldLayer, Pane uiLayer, List<Player> players, List<Loot> loots, Player player1) {
+
+        /** Display score **/
+        uiLayer.getChildren().clear();
+        Text scoreUI = new Text();
+        scoreUI.setText("score: " + player1.getScore());
+        scoreUI.setFont(Font.font("Arial", FontWeight.BOLD, 50));
+        scoreUI.setX(Settings.SCENE_WIDTH - 300);
+        scoreUI.setY(100);
+        scoreUI.setFill(Color.ORANGE);
+        uiLayer.getChildren().add(scoreUI);
+
+        /** Display costs **/
+        for (Loot loot : loots) {
+            updateCost(uiLayer,loot);
+        }
+    }
+
+    public void updateCost(Pane uiLayer,Loot loot){
+        Text costUI = new Text();
+        costUI.setText("" + loot.getCost());
+        costUI.setFont(Font.font("Arial", FontWeight.BOLD, 25));
+        costUI.setX(loot.getPosition().getX()-5);
+        costUI.setY(loot.getPosition().getY()-45);
+        costUI.setFill(Color.DARKGREEN);
+        uiLayer.getChildren().add(costUI);
     }
 
 }

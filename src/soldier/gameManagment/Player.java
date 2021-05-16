@@ -25,11 +25,7 @@ public class Player {
     private boolean isRemovable = false;
     private int count=0;
     private int dir = 0;
-
-
-
     private boolean isAlly;
-
     private Pane layer;
     private List<ImageView> imageViews;
 
@@ -64,11 +60,11 @@ public class Player {
         int delta_x = position.getX() - destination.getX();
         int delta_y = position.getY() - destination.getY();
         double theta_radians = Math.toDegrees(Math.atan2(delta_y, delta_x));
-        System.out.println("______________________________");
-        System.out.println("angle: "+ theta_radians);
+        //System.out.println("______________________________");
+        //System.out.println("angle: "+ theta_radians);
         double speedX = Math.abs(Math.cos(Math.toRadians(theta_radians))*speed);
         double speedY = Math.abs(Math.sin(Math.toRadians(theta_radians)) * speed);
-        System.out.println("speedX: "+ speedX+" speedY: "+ speedY);
+        //System.out.println("speedX: "+ speedX+" speedY: "+ speedY);
 
         if (position.getX() < destination.getX())
             position.setX(position.getX()+(int)speedX);
