@@ -25,10 +25,10 @@ public class Player {
     private Position destination;
     private float speed= 8;
     private int size = 0;
-    private Circle hitbox;
+    protected Circle hitbox;
     private boolean isRemovable = false;
-    private int count=0;
-    private int dir = 0;
+    protected int count=0;
+    protected int dir = 0;
     private boolean isAlly;
     private Pane layer;
     private List<ImageView> imageViews;
@@ -275,5 +275,12 @@ public class Player {
 
     public void heal() {
         army.heal();
+    }
+
+    public void setDir(int i){
+        this.dir = i;
+    }
+    public void resetCount(){
+        this.count = 0;
     }
 }

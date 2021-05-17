@@ -18,10 +18,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
+import soldier.core.UnitGroup;
 import soldier.gameManagment.*;
 import soldier.ui.JFXBuilder;
 import javafx.scene.text.Font;
@@ -54,9 +56,12 @@ public class Main extends Application {
 	private DisplayBuilder builder;
 	private boolean pauseState = false;
 	private boolean isGameOver = false;
+	private boolean isBossDead = false;
+	private boolean isBossSpawned= false;
 	private long nextAICall =0;
 	private long nextLootCall=0;
 	private long nextPlayerCall=0;
+	private long victoryTimer=0;
 
 
 
@@ -65,6 +70,7 @@ public class Main extends Application {
 	private Image HorsemanImage;
 	private Image RobotImage;
 	private Image BikermanImage;
+	private Image BossImage;
 	private Image swordImage;
 	private Image shieldImage;
 	private Image potionImage;
@@ -120,8 +126,12 @@ public class Main extends Application {
 				//player.processInput();
 
 				/** PUPDATE ARMY COUNT **/
-				//updateUnitsCount(true);
-
+				if((player1.getScore()>15)&(isBossSpawned==false)){
+					isBossSpawned=true;
+					Player boss = boss();
+					players.add(boss);
+					boss.addToLayer(builder);
+				}
 				/** MOVEMENTS **/
 				players.forEach(player -> player.move());
 
@@ -145,6 +155,7 @@ public class Main extends Application {
 
 				/** CHECK IF SPRITE CAN BE REMOVED **/
 
+
 				/** REMOVE REMOVABLES FROM LIST LAYER ETC **/
 				removePlayers();
 				removeLoots();
@@ -154,7 +165,10 @@ public class Main extends Application {
 
 				playfieldLayer.getChildren().remove(frontImageView);
 				playfieldLayer.getChildren().add(frontImageView);
-
+				if (isBossDead)
+					victoryTimer+=1;
+				if (victoryTimer>180)
+					victory();
 				if (isGameOver)
 					gameOver();
 			}
@@ -171,6 +185,7 @@ public class Main extends Application {
 	}
 
 
+
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
@@ -178,6 +193,7 @@ public class Main extends Application {
 		centurionImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		HorsemanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		BikermanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		BossImage = new Image(getClass().getResource("/Human/prof.png").toExternalForm(), Settings.BOSS_IMAGE_X, Settings.BOSS_IMAGE_Y, true, true);
 
 		swordImage =  new Image(getClass().getResource("/Equipment/sword.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
 		shieldImage = new Image(getClass().getResource("/Equipment/shield.png").toExternalForm(), Settings.EQUIPMENT_IMAGE_SIZE, Settings.EQUIPMENT_IMAGE_SIZE, true, true);
@@ -203,12 +219,14 @@ public class Main extends Application {
 		//player1.addImageView(new ImageView(orcImage));
 		//player1.addToLayer(builder);
 
-		player1 = new Player(playfieldLayer,"Patrick",50,new Position(200,200),new Position(200,200),true);
+		player1 = new Player(playfieldLayer,"Patrick",5,new Position(200,200),new Position(200,200),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player1);
 		player1.addToLayer(builder);
+
+
 
 		/*Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
 		player2.add(age1.infantryUnit("orc"), HorsemanImage);
@@ -316,10 +334,19 @@ public class Main extends Application {
 		System.out.println("The end ... " + (team1.alive() ? team1.getName() : team2.getName()) + " won." );
 
 		if(team1.alive()){
-			player.removeFromLayer(builder);
-			player.setIsRemovable(true);
-			player1.updateArmy();
-			player1.setScore(player1.getScore()+player.getSize());
+			if (player.getName()!="Boss") {
+				player.removeFromLayer(builder);
+				player.setIsRemovable(true);
+				player1.updateArmy();
+				player1.setScore(player1.getScore() + player.getSize());
+			}
+			else{
+				player.setDir(4);
+				player.resetCount();
+				player1.updateArmy();
+				player1.setScore(player1.getScore() + player.getSize());
+				isBossDead=true;
+			}
 		}else{
 			player1.removeFromLayer(builder);
 			player1.setIsRemovable(true);
@@ -381,7 +408,8 @@ public class Main extends Application {
 				int number = ThreadLocalRandom.current().nextInt(1, players.size() - 1 + 1);
 				int randX = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_X, Settings.SCENE_WIDTH - Settings.SCENE_PADDING_X);
 				int randY = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_Y, Settings.SCENE_HEIGHT - Settings.SCENE_PADDING_Y);
-				players.get(number).setDestination(new Position(randX, randY));
+				if (players.get(number).getName()!="Boss")
+					players.get(number).setDestination(new Position(randX, randY));
 			}
 		}
 	}
@@ -414,24 +442,52 @@ public class Main extends Application {
 			nextPlayerCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(3000, 5000 + 1);
 			//System.out.println("loot : "+loots.size());
 			if (players.size()<4){
-				System.out.println("loot added");
 				Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 				players.add(player2);
 				player2.addToLayer(builder);
 			}
-			int rand = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+			int rand = 0;//ThreadLocalRandom.current().nextInt(0, 3 + 1);
 			if ((players.size()==4)&&(rand==0)){
 				Player removed = players.get(ThreadLocalRandom.current().nextInt(1, 3 + 1));
-				removed.removeFromLayer(builder);
-				removed.setIsRemovable(true);
-				Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
-				players.add(player3);
-				player3.addToLayer(builder);
+				if (removed.getName()!="Boss"){
+					removed.removeFromLayer(builder);
+					removed.setIsRemovable(true);
+					Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+					players.add(player3);
+					player3.addToLayer(builder);
+				}
+
 
 			}
 		}
 	}
 
+	public Player boss(){
+		AgeAbstractFactory fact = new AgeFutureFactory();
+		Player boss = new Boss(playfieldLayer,"Boss",100,new Position(700,700),new Position(700,700),false);
+		boss.add(fact.infantryUnit("Boss"),BossImage);
+		UnitGroup  a = boss.getArmy();
+		a.addEquipment(fact.defenseWeapon());
+		a.addEquipment(fact.attackWeapon());
+		boss.setArmy(a);
+		return boss;
+	}
+
+	private void victory() {
+		Text message = new Text();
+		message.getStyleClass().add("message");
+		message.setText("Victory");
+		message.setFont(Font.font ("Impact", FontWeight.BOLD, 200));
+		message.setFill(Color.ORANGE);
+		message.setX(Settings.SCENE_WIDTH /2-400);
+		message.setY(Settings.SCENE_HEIGHT/2);
+		Rectangle r = new Rectangle(0,0,Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
+		r.setFill(Color.rgb(0,0,0,0.7));
+		UILayer.getChildren().add(r);
+		UILayer.getChildren().add(message);
+
+		gameLoop.stop();
+	}
 
 
 	private void gameOver(){
