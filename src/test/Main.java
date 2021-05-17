@@ -391,10 +391,20 @@ public class Main extends Application {
 			nextLootCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(5000, 10000 + 1);
 			//System.out.println("loot : "+loots.size());
 			if (loots.size()<2){
-				System.out.println("loot added");
+				//System.out.println("loot added");
 				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 				loot1.addToLayer(builder);
 				loots.add(loot1);
+			}
+			int rand = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+			if ((loots.size()==2)&&(rand==0)){
+				Loot removed = loots.get(ThreadLocalRandom.current().nextInt(0, 1 + 1));
+				removed.removeFromLayer(builder);
+				removed.setIsRemovable(true);
+				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
+				loot1.addToLayer(builder);
+				loots.add(loot1);
+
 			}
 		}
 	}
@@ -403,11 +413,21 @@ public class Main extends Application {
 		if (System.currentTimeMillis() > nextPlayerCall) {
 			nextPlayerCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(3000, 5000 + 1);
 			//System.out.println("loot : "+loots.size());
-			if (players.size()<3){
+			if (players.size()<4){
 				System.out.println("loot added");
 				Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 				players.add(player2);
 				player2.addToLayer(builder);
+			}
+			int rand = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+			if ((players.size()==4)&&(rand==0)){
+				Player removed = players.get(ThreadLocalRandom.current().nextInt(1, 3 + 1));
+				removed.removeFromLayer(builder);
+				removed.setIsRemovable(true);
+				Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+				players.add(player3);
+				player3.addToLayer(builder);
+
 			}
 		}
 	}
