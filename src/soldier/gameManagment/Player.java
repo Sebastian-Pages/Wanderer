@@ -23,7 +23,7 @@ public class Player {
     private int score;
     private Position position;
     private Position destination;
-    private float speed= 8;
+    private float speed= Settings.SPEED_PLAYER;
     private int size = 0;
     protected Circle hitbox;
     private boolean isRemovable = false;
@@ -145,7 +145,7 @@ public class Player {
             this.score-=1;
             this.army.addUnit(u);
             this.imageViews.add(imageView);
-            this.hitbox.setRadius(hitbox.getRadius() + Settings.UNIT_SIZE / 4);
+            this.hitbox.setRadius(hitbox.getRadius() + Settings.UNIT_SIZE /3);
             this.size += 1;
         }
     }
@@ -153,7 +153,7 @@ public class Player {
     public void remove(Unit u,ImageView imageView){
         this.army.removeUnit(u);
         this.imageViews.remove(imageView);
-        this.hitbox.setRadius(hitbox.getRadius()-Settings.UNIT_SIZE/2);
+        this.hitbox.setRadius(hitbox.getRadius()-Settings.UNIT_SIZE/3);
         this.size -= 1;
     }
 
