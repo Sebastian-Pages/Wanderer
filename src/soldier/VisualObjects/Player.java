@@ -1,6 +1,5 @@
 package soldier.VisualObjects;
 
-import soldier.VisualObjects.Loot;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -9,7 +8,7 @@ import javafx.scene.shape.Circle;
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
-import soldier.core.DisplayBuilder;
+import soldier.ui.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
 import soldier.gameManagment.Position;

@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
-import soldier.core.DisplayBuilder;
+import soldier.ui.DisplayBuilder;
 import soldier.core.Equipment;
 import soldier.gameManagment.Position;
 import soldier.gameManagment.Settings;

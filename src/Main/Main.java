@@ -24,7 +24,7 @@ import soldier.VisualObjects.Player;
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
-import soldier.core.DisplayBuilder;
+import soldier.ui.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
 import soldier.factories.LootFactory;
@@ -34,6 +34,8 @@ import soldier.ui.JFXBuilder;
 import javafx.scene.text.Font;
 
 import javafx.animation.AnimationTimer;
+import soldier.units.UnitBoss;
+import soldier.units.UnitCenturion;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -406,7 +408,7 @@ public class Main extends Application {
 	public Player boss(){
 		AgeAbstractFactory fact = new AgeFutureFactory();
 		Player boss = new Boss(playfieldLayer,"Boss",100,new Position(700,700),new Position(700,700),false);
-		boss.add(fact.infantryUnit("Boss"),BossImage);
+		boss.add(new UnitBoss("Boss"),BossImage);
 		UnitGroup  a = boss.getArmy();
 		a.addEquipment(fact.defenseWeapon());
 		a.addEquipment(fact.attackWeapon());

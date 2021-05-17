@@ -1,16 +1,18 @@
-package soldier.core;
+package soldier.ui;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import soldier.VisualObjects.Loot;
 import soldier.VisualObjects.Player;
+import soldier.core.Unit;
+import soldier.core.UnitGroup;
 import soldier.gameManagment.Position;
 
 import java.util.List;
 
 public interface DisplayBuilder {
-    void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageview, int size, int count,int dir);
+    void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageview, int size, int count, int dir);
     void addUnitToLayer(Pane layer, ImageView imageView);
     void removeUnitFromLayer(Pane layer, ImageView imageView);
 
