@@ -29,41 +29,22 @@ Voici la structure du projet.
 ```
 src/
 │
-├── soldier/              # Racine du simulateur
-│   ├── dominion/           # Implémentation du jeu Dominion
-│   ├── instruction/        # Bibliothèque d'instructions
-│   ├── advice/             # Bibliothèque des conseils
-│   ├── player/             # Implémentation des joueurs
-│   ├── log/                # Implémentation des logs
-│   └── enum/
+├── Main/                   # Contient le Main file du projet
 │
-├── test/                 # Racine du parseur
+├── soldier/                # Racine du code du projet
+│   ├── ages/               # Factory des ages ( Middle et Future )
+│   ├── core/               # Ensemble des classes principales du projet
+│   ├── equipement/         # Equipements et leurs Behaviors
+│   ├── factories/          # Factory des objets visibles ( Player et Loot )
+│   ├── gameManagement/     # Classes Necessaire pour le bon déroulement du jeu
+│   ├── ui/                 # Builder et les UI
+│   ├── units/              # Unitees et leurs Behaviors
+│   ├── util/               # Observateur
+│   ├── visitor/            # Visiteur
+│   └── visualObjects/      # Racine du parseur
 │
-├── data/                   # Contient des copies des fichiers .json venant du parser
-│
-├── presets/                # Contient les presets 
-│
-├── tests/                  # Tests unitaires
-│
-└── simulatorConfig.json
+└── README.md
 ```
-
-Les desciptions qui suivent ne sont pas exhaustives (i.e nous ne parlons pas de toutes les classes, ni de tous les fichiers). Elles ont pour but de présenter les quelques points importants du projet (donnant par la même occasion une justification à leur existance).
-
-### **src :**
-
-- Contient les deux fonctions main à exécuter, le simulateur minimal, ainsi que tous les autres modules.<br/>
-
-- Le fichier [main-parser.py](src/main-parser.py) permet la gestion des arguments du parseur et son lancement pour parser les pages web du wiki.<br/>
-
-- Le fichier [main-simulator.py](src/main-simulator.py) permet la gestion des arguments du simulateur et sa construction. <br/>
-
-- Le fonctionnement des deux programmes à exécuter est détaillé dans le [chapitre 5](##-5---Exécuter-les-programmes) de ce document, avec des exemples de commandes à effectuer dans le terminal.
-
-- Le fichier [dominion-transmis.py](src/dominion-transmis.py) est le simulateur minimal tel que donné au début du projet. Il est entièrement fonctionnel et exécutable.
-
-- Le fichier [simulatorConfig.json](src/simulatorConfig.json) permet de donner au simulateur les différents fichiers/dossiers utiles à son bon fonctionnement. Il peut être modifié à votre guise.
-
 
 # 3 - Guide Utilisation
 
