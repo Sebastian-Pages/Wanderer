@@ -383,7 +383,7 @@ public class Main extends Application {
 				players.add(player2);
 				player2.addToLayer(builder);
 			}
-			int rand = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+			int rand = ThreadLocalRandom.current().nextInt(0, 2 + 1);
 			if ((players.size()==4)&&(rand==0)){
 				Player removed = players.get(ThreadLocalRandom.current().nextInt(1, 3 + 1));
 				if (removed.getName()!="Boss"){
