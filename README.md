@@ -48,13 +48,25 @@ src/
 
 # 3 - Guide Utilisation
 
-Pour jouer à ce jeu :
+## Lancement
+Il y a deux façon de lancer une partie de Wanderer.
 
-- Run le Main
+- Executer le Main 
 
 ou
 
-- Lancer l'executable
+- Lancer l'executable avec la commande suivante:
+`java --module-path /Users/PATH_TO_FX/Desktop/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml -jar Wanderer.jar`
+
+## Règles du jeu
+
+Element à connaitre:
+
+|Header 1       |     2 header    | 
+| ------------- |: -------------: | 
+| Armée Alliée  |      ![image](resources/images/ally.png)       |
+| Line 2        |        2        |      value |
+| 3 Online      |        3        |      value |
 
 On peut ajuster les Parametres d'une partie dans le fichier [Settings](src/soldier/gameManagement/Settings.java)
 
