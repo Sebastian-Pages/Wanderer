@@ -82,23 +82,25 @@ public class Player {
     public void randomAdd(Image BikermanImage,Image CenturionImage,Image HorsemanImage,Image RobotImage){
         int randNbSoldier = ThreadLocalRandom.current().nextInt(2, 5 + 1);
         for(int i=0;i<randNbSoldier;++i){
-            AgeAbstractFactory fact;
-            int randAge = ThreadLocalRandom.current().nextInt(0, 1 + 1);
-            if ( (randAge & 1) == 0 )
+            AgeAbstractFactory fact1 = new AgeMiddleFactory();
+            AgeAbstractFactory fact2 = new AgeFutureFactory();
+            //AgeAbstractFactory fact;
+            /*int randAge = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+            if ( randAge  == 0 )
                 fact = new AgeMiddleFactory();
             else
-                fact = new AgeFutureFactory();
+                fact = new AgeFutureFactory();*/
 
             int randSoldier = ThreadLocalRandom.current().nextInt(0, 3 + 1);
 
-            if ( (randSoldier & 1) == 0 ){
-                this.add(fact.riderUnit("rider"),BikermanImage);
-            } else if((randSoldier & 1) == 1){
-                this.add(fact.infantryUnit("centurion"),CenturionImage);
-            } else if((randSoldier & 1) == 2){
-                this.add(fact.riderUnit("horseman"),HorsemanImage);
-            }else{
-                this.add(fact.infantryUnit("Robot"),RobotImage);
+            if (randSoldier  == 0 ){
+                this.add(fact2.riderUnit("rider"),BikermanImage);
+            } else if(randSoldier == 1 ){
+                this.add(fact1.infantryUnit("centurion"),CenturionImage);
+            } else if(randSoldier == 2 ){
+                this.add(fact1.riderUnit("horseman"),HorsemanImage);
+            }else /*if (randSoldier == 3 )*/{
+                this.add(fact2.infantryUnit("Robot"),RobotImage);
             }
 
         }

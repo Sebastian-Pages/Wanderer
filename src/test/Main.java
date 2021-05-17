@@ -174,7 +174,7 @@ public class Main extends Application {
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanRobotBaseWalk .png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		centurionImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		HorsemanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		BikermanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
@@ -307,9 +307,9 @@ public class Main extends Application {
 		while(team1.alive() && team2.alive()) {
 			System.out.println("Round  #" + round++);
 			float st1 = team1.strike();
+			float st2 = team2.strike();
 			System.out.println(team1.getName() + " attack with force : " + st1);
 			team2.parry(st1);
-			float st2 = team2.strike();
 			System.out.println(team2.getName() + " attack with force : " + st2);
 			team1.parry(st2);
 		}
