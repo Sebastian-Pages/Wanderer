@@ -36,9 +36,9 @@ src/
 │   ├── core/               # Ensemble des classes principales du projet
 │   ├── equipement/         # Equipements et leurs Behaviors
 │   ├── factories/          # Factory des objets visibles ( Player et Loot )
-│   ├── gameManagement/     # Classes Necessaire pour le bon déroulement du jeu
+│   ├── gameManagement/     # Classes Necessaires pour le bon déroulement du jeu
 │   ├── ui/                 # Builder et les UI
-│   ├── units/              # Unitees et leurs Behaviors
+│   ├── units/              # Unites et leurs Behaviors
 │   ├── util/               # Observateur
 │   ├── visitor/            # Visiteur
 │   └── visualObjects/      # Racine du parseur
