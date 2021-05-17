@@ -15,7 +15,6 @@ public class Boss extends Player {
         super.count+=1;
         if ((count > 159)&&(dir!=5)) {
             count = 0;
-            System.out.println("DEBUG: "+dir);
             this.dir +=1;
             if (dir == 4)
                 dir=0;

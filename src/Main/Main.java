@@ -260,7 +260,6 @@ public class Main extends Application {
 	}
 
 	private void collide(Player player) {
-		System.out.println("collision "+players.toString());
 		if (player.isAlly())
 			merge(player);
 		else
@@ -272,15 +271,11 @@ public class Main extends Application {
 		Unit team1 = player1.getArmy();
 		Unit team2 = player.getArmy();
 		while(team1.alive() && team2.alive()) {
-			System.out.println("Round  #" + round++);
 			float st1 = team1.strike();
 			float st2 = team2.strike();
-			System.out.println(team1.getName() + " attack with force : " + st1);
 			team2.parry(st1);
-			System.out.println(team2.getName() + " attack with force : " + st2);
 			team1.parry(st2);
 		}
-		System.out.println("The end ... " + (team1.alive() ? team1.getName() : team2.getName()) + " won." );
 
 		if(team1.alive()){
 			if (player.getName()!="Boss") {
@@ -324,7 +319,6 @@ public class Main extends Application {
 			Player p = iter.next();
 
 			if (p.isRemovable()) {
-				System.out.println(p.toString()+" removed");
 				iter.remove();
 			}
 		}
