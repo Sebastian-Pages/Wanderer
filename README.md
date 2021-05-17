@@ -41,7 +41,7 @@ src/
 │   ├── units/              # Unites et leurs Behaviors
 │   ├── util/               # Observateur
 │   ├── visitor/            # Visiteur
-│   └── visualObjects/      # Racine du parseur
+│   └── visualObjects/      # Classes des objets visuels
 │
 └── README.md
 ```
