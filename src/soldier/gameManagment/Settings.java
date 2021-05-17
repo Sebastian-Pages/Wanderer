@@ -7,6 +7,8 @@ public class Settings {
     public static final int SCENE_PADDING = 60;
     public static final int UNIT_SIZE = 32;
     public static final int UNIT_IMAGE_SIZE = 512;
+    public static final int BOSS_IMAGE_Y = 640;
+    public static final int BOSS_IMAGE_X = 2048;
     public static final int EQUIPMENT_IMAGE_SIZE = 256;
     public static final int UNIT_OFFSET = 36;
     public static final int UNIT_SPRITE_OFFSET = 46;
