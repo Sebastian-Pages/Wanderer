@@ -62,13 +62,13 @@ ou
 
 Element à connaitre:
 
-|Header 1       |     2 header      |     2 header    |
-| ------------- |: -------------: | : -------------: | 
-| Armée Alliée  |![image](resources/images/ally.png)  | À Recruter contre du score|
-| Armée Ennemie |![image](resources/images/ennemi.png)| À Combattre pour du score|
-| Equipment     |![image](resources/images/equipment.png)| Equipe ton armée conte du score| 
-| Potion        |![image](resources/images/potion.png)| Soigne ton armée| 
-| Boss          |![image](resources/images/boss.png)| À Combattre pour gagner| 
+| Element       | Image                                  |  Description                     |
+| ------------- |: ------------------------------------: | : -----------------------------: | 
+| Armée Alliée  |![image](resources/images/ally.png)     | À Recruter contre du score       |
+| Armée Ennemie |![image](resources/images/ennemi.png)   | À Combattre pour du score        |
+| Equipment     |![image](resources/images/equipment.png)| Equipe ton armée conte du score  | 
+| Potion        |![image](resources/images/potion.png)   | Soigne ton armée                 | 
+| Boss          |![image](resources/images/boss.png)     | À Combattre pour gagner          | 
 
 Déplacez votre armée avec la souris. Augmenter votre score en gagnant des combats et en vous aidant de vos alliés.
 Une fois un score de 10 atteint,tué le boss pourgagner. Évitez les combats qui ne sont pas à votre avantage.
