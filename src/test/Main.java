@@ -54,7 +54,9 @@ public class Main extends Application {
 	private DisplayBuilder builder;
 	private boolean pauseState = false;
 	private boolean isGameOver = false;
-	private long nextCall=0;
+	private long nextAICall =0;
+	private long nextLootCall=0;
+	private long nextPlayerCall=0;
 
 
 
@@ -125,6 +127,8 @@ public class Main extends Application {
 
 				/** AI **/
 				AI();
+				populateLoot();
+				populatePlayers();
 
 				/** CHECK COLLISIONS **/
 				checkCollisions();
@@ -166,6 +170,7 @@ public class Main extends Application {
 		gameLoop.start();
 	}
 
+
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
@@ -198,7 +203,7 @@ public class Main extends Application {
 		//player1.addImageView(new ImageView(orcImage));
 		//player1.addToLayer(builder);
 
-		player1 = new Player(playfieldLayer,"Patrick",5,new Position(100,100),new Position(100,100),true);
+		player1 = new Player(playfieldLayer,"Patrick",50,new Position(200,200),new Position(200,200),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
@@ -221,7 +226,7 @@ public class Main extends Application {
 		players.add(player3);
 		player3.addToLayer(builder);*/
 
-		Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
+	/*	Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 		loot1.addToLayer(builder);
 		loots.add(loot1);
 		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
@@ -238,7 +243,7 @@ public class Main extends Application {
 
 		Player player4 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 		players.add(player4);
-		player4.addToLayer(builder);
+		player4.addToLayer(builder);*/
 
 		frontImageView = new ImageView(frontImage);
 		playfieldLayer.getChildren().add(frontImageView);
@@ -356,26 +361,57 @@ public class Main extends Application {
 
 	private void removeLoots() {
 		Iterator<Loot> iter = loots.iterator();
+		Loot toRemove= null;
 		while (iter.hasNext()) {
 			Loot loot = iter.next();
 
 			if (loot.isRemovable()) {
 				loot.removeFromLayer(builder);
+				toRemove = loot;
 				iter.remove();
+			}
+		}
+		loots.remove(toRemove);
+	}
+
+	private void AI() {
+		if (System.currentTimeMillis() > nextAICall) {
+			nextAICall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(2000, 3000 + 1);
+			if (players.size() > 1) {
+				int number = ThreadLocalRandom.current().nextInt(1, players.size() - 1 + 1);
+				int randX = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_X, Settings.SCENE_WIDTH - Settings.SCENE_PADDING_X);
+				int randY = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_Y, Settings.SCENE_HEIGHT - Settings.SCENE_PADDING_Y);
+				players.get(number).setDestination(new Position(randX, randY));
 			}
 		}
 	}
 
-	private void AI() {
-		if (System.currentTimeMillis() > nextCall) {
-			long lastCall = System.currentTimeMillis();
-			nextCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(2000, 3000 + 1);
-			int number = ThreadLocalRandom.current().nextInt(1, players.size() + 1);
-			int randX = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_X, Settings.SCENE_WIDTH - Settings.SCENE_PADDING_X);
-			int randY = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_Y, Settings.SCENE_HEIGHT- Settings.SCENE_PADDING_Y);
-			players.get(number).setDestination(new Position(randX, randY));
+	private void populateLoot() {
+		if (System.currentTimeMillis() > nextLootCall) {
+			nextLootCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(5000, 10000 + 1);
+			//System.out.println("loot : "+loots.size());
+			if (loots.size()<2){
+				System.out.println("loot added");
+				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
+				loot1.addToLayer(builder);
+				loots.add(loot1);
+			}
 		}
 	}
+
+	private void populatePlayers() {
+		if (System.currentTimeMillis() > nextPlayerCall) {
+			nextPlayerCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(3000, 5000 + 1);
+			//System.out.println("loot : "+loots.size());
+			if (players.size()<3){
+				System.out.println("loot added");
+				Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+				players.add(player2);
+				player2.addToLayer(builder);
+			}
+		}
+	}
+
 
 
 	private void gameOver(){
