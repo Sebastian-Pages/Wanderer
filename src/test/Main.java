@@ -126,7 +126,7 @@ public class Main extends Application {
 				//player.processInput();
 
 				/** PUPDATE ARMY COUNT **/
-				if((player1.getScore()>15)&(isBossSpawned==false)){
+				if((player1.getScore()>10)&(isBossSpawned==false)){
 					isBossSpawned=true;
 					Player boss = boss();
 					players.add(boss);
@@ -189,7 +189,7 @@ public class Main extends Application {
 	private void loadGame() {
 		/* LOAD IMAGES */
 		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
-		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanRobotBaseWalk .png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		centurionImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		HorsemanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		BikermanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
@@ -446,7 +446,7 @@ public class Main extends Application {
 				players.add(player2);
 				player2.addToLayer(builder);
 			}
-			int rand = 0;//ThreadLocalRandom.current().nextInt(0, 3 + 1);
+			int rand = ThreadLocalRandom.current().nextInt(0, 3 + 1);
 			if ((players.size()==4)&&(rand==0)){
 				Player removed = players.get(ThreadLocalRandom.current().nextInt(1, 3 + 1));
 				if (removed.getName()!="Boss"){

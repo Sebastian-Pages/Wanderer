@@ -1,3 +1,5 @@
+/**This code is from Laurent Reveillere**/
+
 package soldier.gameManagment;
 
 import javafx.event.EventHandler;
