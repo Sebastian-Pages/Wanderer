@@ -1,8 +1,9 @@
-package soldier.gameManagment;
+package soldier.VisualObjects;
 
 import javafx.scene.layout.Pane;
+import soldier.gameManagment.Position;
 
-public class Boss extends  Player{
+public class Boss extends Player {
 
     public Boss(Pane layer, String name, int score, Position position, Position destination, boolean isAlly) {
         super(layer, name, score, position, destination, isAlly);

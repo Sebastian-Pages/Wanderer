@@ -26,15 +26,7 @@ public class Position {
     }
 
     public int distance(Position p){
-        //System.out.println("hello: "+(int) Math.sqrt(  (x-p.getX())*(x-p.getX()) + (y-p.getY())*(y-p.getY())  ));
         return (int) Math.sqrt(  (x-p.getX())*(x-p.getX()) + (y-p.getY())*(y-p.getY())  );
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }

@@ -1,5 +1,6 @@
-package soldier.gameManagment;
+package soldier.VisualObjects;
 
+import soldier.VisualObjects.Loot;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,8 @@ import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
+import soldier.gameManagment.Position;
+import soldier.gameManagment.Settings;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -84,12 +87,6 @@ public class Player {
         for(int i=0;i<randNbSoldier;++i){
             AgeAbstractFactory fact1 = new AgeMiddleFactory();
             AgeAbstractFactory fact2 = new AgeFutureFactory();
-            //AgeAbstractFactory fact;
-            /*int randAge = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-            if ( randAge  == 0 )
-                fact = new AgeMiddleFactory();
-            else
-                fact = new AgeFutureFactory();*/
 
             int randSoldier = ThreadLocalRandom.current().nextInt(0, 3 + 1);
 
@@ -120,11 +117,9 @@ public class Player {
         int delta_x = position.getX() - destination.getX();
         int delta_y = position.getY() - destination.getY();
         double theta_radians = Math.toDegrees(Math.atan2(delta_y, delta_x));
-        //System.out.println("______________________________");
-        //System.out.println("angle: "+ theta_radians);
-        double speedX = Math.abs(Math.cos(Math.toRadians(theta_radians))*speed);
+
+        double speedX = Math.abs(Math.cos(Math.toRadians(theta_radians)) * speed);
         double speedY = Math.abs(Math.sin(Math.toRadians(theta_radians)) * speed);
-        //System.out.println("speedX: "+ speedX+" speedY: "+ speedY);
 
         if (position.getX() < destination.getX())
             position.setX(position.getX()+(int)speedX);
@@ -159,18 +154,14 @@ public class Player {
 
     public void addToLayer(DisplayBuilder builder) {
         builder.addUnitGroupToLayer(army,layer,imageViews,hitbox);
-        //this.layer.getChildren().add(this.imageView);
     }
 
     public void removeFromLayer(DisplayBuilder builder) {
         builder.removeUnitGroupFromLayer(army,layer,imageViews,hitbox);
-        //this.layer.getChildren().remove(this.imageView);
     }
 
     public void updateUI(DisplayBuilder builder) {
         builder.updateUnitGroup(army,position, layer,imageViews,hitbox,size,count,getDir());
-
-        //imageView.relocate(position.x, position.y);
     }
 
     public void removeImageView(ImageView imageView) {

@@ -3,8 +3,8 @@ package soldier.core;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
-import soldier.gameManagment.Loot;
-import soldier.gameManagment.Player;
+import soldier.VisualObjects.Loot;
+import soldier.VisualObjects.Player;
 import soldier.gameManagment.Position;
 
 import java.util.List;

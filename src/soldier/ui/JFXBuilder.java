@@ -2,19 +2,17 @@ package soldier.ui;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
-import soldier.gameManagment.Loot;
-import soldier.gameManagment.Player;
+import soldier.VisualObjects.Loot;
+import soldier.VisualObjects.Player;
 import soldier.gameManagment.Position;
 import soldier.gameManagment.Settings;
 
@@ -26,14 +24,10 @@ public class JFXBuilder implements DisplayBuilder {
     public void updateUnit(Unit u, Position p, int rank, Pane layer, ImageView imageView, int size,int count,int dir) {
         int offsetx = (count/10)*128;
         int offsety = dir*128;
-        //System.out.println("offstes"+offsetx);
         imageView.setViewport(new Rectangle2D(offsetx, offsety, 128, 128));
 
         if (size == 1) {
-            //imageView.setViewport(new Rectangle2D(48+offsetx, 48, 32+offsetx, 32));
-
             imageView.relocate(p.getX() - Settings.UNIT_SIZE / 2 - Settings.UNIT_SPRITE_OFFSET, p.getY() - Settings.UNIT_SIZE / 2 - Settings.UNIT_SPRITE_OFFSET);
-
         }
 
         if (size == 2)
@@ -122,9 +116,7 @@ public class JFXBuilder implements DisplayBuilder {
     public void addUnitGroupToLayer(UnitGroup a, Pane layer, List<ImageView> imageViews, Circle hitbox) {
         layer.getChildren().add(hitbox);
         int rank = 0;
-        //System.out.println(imageViews.toString());
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
-            //System.out.println("rank: "+rank);
             it.next();
             layer.getChildren().add(imageViews.get(rank));
             ++rank;
@@ -135,9 +127,7 @@ public class JFXBuilder implements DisplayBuilder {
     public void removeUnitGroupFromLayer(UnitGroup a, Pane layer, List<ImageView> imageViews,Circle hitbox) {
         layer.getChildren().remove(hitbox);
         int rank = 0;
-        //System.out.println(imageViews.toString());
         for (Iterator<Unit> it = a.subUnits(); it.hasNext(); ) {
-            //System.out.println("rank: "+rank);
             it.next();
             layer.getChildren().remove(imageViews.get(rank));
             ++rank;
@@ -159,10 +149,8 @@ public class JFXBuilder implements DisplayBuilder {
     @Override
     public void updateEquipment(Position p, Pane layer, ImageView imageView, Circle hitbox, int count, int dir) {
         hitbox.relocate(p.getX()-hitbox.getRadius(),p.getY()-hitbox.getRadius());
-        //System.out.println("DEBUG: "+p.getX()+" "+p.getY());
         int offsetx = (count/10)*128/2;
         int offsety = dir*128/2;
-        //System.out.println("offstes"+offsetx);
         imageView.setViewport(new Rectangle2D(offsetx, offsety, 64, 64));
         imageView.relocate(p.getX()  - Settings.EQUIPMENT_SPRITE_OFFSET - Settings.EQUIPMENT_SPRITE_OFFSET/2, p.getY() - Settings.EQUIPMENT_SPRITE_OFFSET - Settings.EQUIPMENT_SPRITE_OFFSET/2);
 

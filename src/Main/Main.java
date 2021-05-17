@@ -2,8 +2,10 @@
  * D. Auber & P. Narbel
  * Solution TD Architecture Logicielle 2016 Universit� Bordeaux.
  */
-package test;
+package Main;
 
+import soldier.VisualObjects.Boss;
+import soldier.VisualObjects.Loot;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -18,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import soldier.VisualObjects.Player;
 import soldier.ages.AgeFutureFactory;
 import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
@@ -52,7 +55,6 @@ public class Main extends Application {
 	private List<Player> players = new ArrayList<>();
 	private List<Loot> loots = new ArrayList<>();;
 	private Player player1;
-	private Map map;
 	private DisplayBuilder builder;
 	private boolean pauseState = false;
 	private boolean isGameOver = false;
@@ -118,14 +120,7 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 
-				//player1.displayPlayer(builder);
-				//players.forEach(  player -> player.displayPlayer(builder));
-				//players.forEach(  player -> player.setPosition(new Position(player.getPosition().getX()+1,player.getPosition().getY()+1)));
-
-				/** PLAYER INPUT **/
-				//player.processInput();
-
-				/** PUPDATE ARMY COUNT **/
+				/** CHECK IF BOSS CAN SPAWN **/
 				if((player1.getScore()>10)&(isBossSpawned==false)){
 					isBossSpawned=true;
 					Player boss = boss();
@@ -135,7 +130,7 @@ public class Main extends Application {
 				/** MOVEMENTS **/
 				players.forEach(player -> player.move());
 
-				/** AI **/
+				/** AI & OBJECTS GENERATION**/
 				AI();
 				populateLoot();
 				populatePlayers();
@@ -145,7 +140,6 @@ public class Main extends Application {
 
 
 				/** UPDATE SPRITES IN SCENE **/
-
 				players.forEach(player -> player.updateUI(builder));
 				loots.forEach(loot -> loot.updateUI(builder));
 
@@ -153,18 +147,16 @@ public class Main extends Application {
 				loots.forEach(loot -> loot.count());
 				builder.updateUI(playfieldLayer,UILayer,players,loots,player1);
 
-				/** CHECK IF SPRITE CAN BE REMOVED **/
-
-
 				/** REMOVE REMOVABLES FROM LIST LAYER ETC **/
 				removePlayers();
 				removeLoots();
 
 
-				/** UPDATE SCORE HEALTH ETC**/
-
+				/** UPDATE UI **/
 				playfieldLayer.getChildren().remove(frontImageView);
 				playfieldLayer.getChildren().add(frontImageView);
+
+				/** CHECK END GAME **/
 				if (isBossDead)
 					victoryTimer+=1;
 				if (victoryTimer>180)
@@ -176,7 +168,6 @@ public class Main extends Application {
 			private void processInput(Input input, long now) {
 				if (input.isExit()) {
 					Platform.exit();
-					//System.out.println("exited");
 					System.exit(0);
 				}
 			}
@@ -187,8 +178,8 @@ public class Main extends Application {
 
 
 	private void loadGame() {
-		/* LOAD IMAGES */
-		//humanWalkImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
+
+		/** LOAD IMAGES **/
 		RobotImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanRobotBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		centurionImage = new Image(getClass().getResource("/Human/Minifantasy_CreaturesHumanBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
 		HorsemanImage = new Image(getClass().getResource("/Orc/Minifantasy_CreaturesOrcBaseWalk.png").toExternalForm(), Settings.UNIT_IMAGE_SIZE, Settings.UNIT_IMAGE_SIZE, true, true);
@@ -207,17 +198,8 @@ public class Main extends Application {
 		input = new Input(scene);
 		input.addListeners();
 		builder = new JFXBuilder();
-		map = new Map(Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
 		playfieldLayer.getChildren().add(new ImageView(mapImage));
-
-		/*MAKE PLAYER */
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
-		//UnitGroup team1 =  new UnitGroup("TheArmy");
-		//team1.addUnit(age1.infantryUnit("human"));
-		//team1.addUnit(age1.infantryUnit("orc"));
-		//player1.addImageView(new ImageView(humanImage));
-		//player1.addImageView(new ImageView(orcImage));
-		//player1.addToLayer(builder);
 
 		player1 = new Player(playfieldLayer,"Patrick",5,new Position(200,200),new Position(200,200),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
@@ -225,43 +207,6 @@ public class Main extends Application {
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
 		players.add(player1);
 		player1.addToLayer(builder);
-
-
-
-		/*Player player2 = new Player(playfieldLayer,"1orc",0,new Position(500,500),new Position(500,500),false);
-		player2.add(age1.infantryUnit("orc"), HorsemanImage);
-		player2.add(age1.infantryUnit("orc"), HorsemanImage);
-		players.add(player2);
-		player2.addToLayer(builder);
-
-		Player player3 = new Player(playfieldLayer,"4humans",0,new Position(500,700),new Position(500,700),false);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		player3.add(age1.infantryUnit("human"), centurionImage);
-		players.add(player3);
-		player3.addToLayer(builder);*/
-
-	/*	Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
-		loot1.addToLayer(builder);
-		loots.add(loot1);
-		Loot loot2 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
-		loot2.addToLayer(builder);
-		loots.add(loot2);
-
-		Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
-		players.add(player2);
-		player2.addToLayer(builder);
-
-		Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
-		players.add(player3);
-		player3.addToLayer(builder);
-
-		Player player4 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
-		players.add(player4);
-		player4.addToLayer(builder);*/
 
 		frontImageView = new ImageView(frontImage);
 		playfieldLayer.getChildren().add(frontImageView);
@@ -352,7 +297,6 @@ public class Main extends Application {
 			player1.setIsRemovable(true);
 			player.updateArmy();
 			isGameOver=true;
-			//Ajout Image game over
 		}
 	}
 
@@ -364,8 +308,7 @@ public class Main extends Application {
 			Unit u = it.next();
 			player1.add(u,player.getImageViews().get(rank));
 			player.remove(u,player.getImageViews().get(rank));
-			//players.remove(player);
-			//player.removeFromLayer(builder);
+
 		}
 		player1.addToLayer(builder);
 		player.setIsRemovable(true);
@@ -377,9 +320,6 @@ public class Main extends Application {
 			Player p = iter.next();
 
 			if (p.isRemovable()) {
-				// remove from layer
-				// p.removeFromLayer();
-				// remove from list
 				System.out.println(p.toString()+" removed");
 				iter.remove();
 			}
@@ -417,9 +357,7 @@ public class Main extends Application {
 	private void populateLoot() {
 		if (System.currentTimeMillis() > nextLootCall) {
 			nextLootCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(5000, 10000 + 1);
-			//System.out.println("loot : "+loots.size());
 			if (loots.size()<2){
-				//System.out.println("loot added");
 				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
 				loot1.addToLayer(builder);
 				loots.add(loot1);
@@ -440,7 +378,6 @@ public class Main extends Application {
 	private void populatePlayers() {
 		if (System.currentTimeMillis() > nextPlayerCall) {
 			nextPlayerCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(3000, 5000 + 1);
-			//System.out.println("loot : "+loots.size());
 			if (players.size()<4){
 				Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 				players.add(player2);
@@ -479,7 +416,7 @@ public class Main extends Application {
 		message.setText("Victory");
 		message.setFont(Font.font ("Impact", FontWeight.BOLD, 200));
 		message.setFill(Color.ORANGE);
-		message.setX(Settings.SCENE_WIDTH /2-400);
+		message.setX(Settings.SCENE_WIDTH /2-300);
 		message.setY(Settings.SCENE_HEIGHT/2);
 		Rectangle r = new Rectangle(0,0,Settings.SCENE_WIDTH,Settings.SCENE_HEIGHT);
 		r.setFill(Color.rgb(0,0,0,0.7));

@@ -1,4 +1,4 @@
-package soldier.gameManagment;
+package soldier.VisualObjects;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,8 +10,9 @@ import soldier.ages.AgeMiddleFactory;
 import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
 import soldier.core.Equipment;
+import soldier.gameManagment.Position;
+import soldier.gameManagment.Settings;
 
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Loot {
@@ -78,18 +79,14 @@ public class Loot {
 
     public void addToLayer(DisplayBuilder builder) {
         builder.addEquipmentToLayer(layer,imageView,hitbox);
-        //this.layer.getChildren().add(this.imageView);
     }
 
     public void removeFromLayer(DisplayBuilder builder) {
         builder.removeEquipmentFromLayer(layer,imageView,hitbox);
-        //this.layer.getChildren().remove(this.imageView);
     }
 
     public void updateUI(DisplayBuilder builder) {
         builder.updateEquipment(position, layer,imageView,hitbox,count,dir);
-
-        //imageView.relocate(position.x, position.y);
     }
 
     public Position getPosition() {
