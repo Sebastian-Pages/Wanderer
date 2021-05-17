@@ -185,6 +185,21 @@ public class JFXBuilder implements DisplayBuilder {
         for (Loot loot : loots) {
             updateCost(uiLayer,loot);
         }
+
+        /** Display life **/
+        for (Player p : players) {
+            updatelife(uiLayer,p);
+        }
+    }
+
+    private void updatelife(Pane uiLayer, Player p) {
+        Text costUI = new Text();
+        costUI.setText("" + Math.round(p.getArmy().getHealthPoints()));
+        costUI.setFont(Font.font("Arial", FontWeight.BOLD, 25));
+        costUI.setX(p.getPosition().getX()-30);
+        costUI.setY(p.getPosition().getY()-45);
+        costUI.setFill(Color.PALEGREEN);
+        uiLayer.getChildren().add(costUI);
     }
 
     public void updateCost(Pane uiLayer,Loot loot){

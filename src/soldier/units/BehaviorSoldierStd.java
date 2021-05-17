@@ -1,6 +1,6 @@
 /**
  * D. Auber & P. Narbel
- * Solution TD Architecture Logicielle 2016 Université Bordeaux.
+ * Solution TD Architecture Logicielle 2016 Universitï¿½ Bordeaux.
  */
 package soldier.units;
 
@@ -41,7 +41,7 @@ public class BehaviorSoldierStd implements BehaviorSoldier {
 
 	@Override
 	public void heal() {
-		force = initialHealth;
+		healthPoints  = initialHealth;
 	}
 
 	public float initialHealth() {

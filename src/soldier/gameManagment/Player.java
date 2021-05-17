@@ -52,7 +52,7 @@ public class Player {
 
 
     public Player(Pane layer,Image BikermanImage,Image CenturionImage,Image HorsemanImage,Image RobotImage) {
-        int rand = ThreadLocalRandom.current().nextInt(0, 1 + 1);
+        int rand = ThreadLocalRandom.current().nextInt(0, 2 + 1);
         int x = ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_X, Settings.SCENE_WIDTH - Settings.SCENE_PADDING_X);
         int y= ThreadLocalRandom.current().nextInt(Settings.SCENE_PADDING_Y, Settings.SCENE_HEIGHT- Settings.SCENE_PADDING_Y);
         this.name = "Random Player";
@@ -61,7 +61,7 @@ public class Player {
         this.count = ThreadLocalRandom.current().nextInt(0, 3 + 1);
         this.dir = ThreadLocalRandom.current().nextInt(0, 3 + 1);
         this.hitbox = new Circle(40);
-        if ( (rand & 1) == 0 ){
+        if ( rand == 0 ){
             this.isAlly = true;
         }
         else{
