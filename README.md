@@ -56,8 +56,8 @@ Il y a deux façon de lancer une partie de Wanderer.
 ou
 
 - Lancer l'executable avec la commande suivante:
-`java --module-path /Users/PATH_TO_FX/Desktop/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml -jar Wanderer.jar`
-
+`java --module-path /Users/PATH_TO_FX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml -jar Wanderer.jar`
+avec `/PATH_TO_FX/javafx-sdk-11.0.2/lib` comme chemin vers la librairie JavaFX.
 ## Règles du jeu
 
 Element à connaitre:
