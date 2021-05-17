@@ -80,3 +80,4 @@ On peut ajuster les Parametres d'une partie dans le fichier [Settings](src/soldi
 
 ## Credit
 Les images sont faites par Krishna Palacio
+Inspiré par le jeu Wanderer.io
