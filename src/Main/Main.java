@@ -27,6 +27,8 @@ import soldier.core.AgeAbstractFactory;
 import soldier.core.DisplayBuilder;
 import soldier.core.Unit;
 import soldier.core.UnitGroup;
+import soldier.factories.LootFactory;
+import soldier.factories.PlayerFactory;
 import soldier.gameManagment.*;
 import soldier.ui.JFXBuilder;
 import javafx.scene.text.Font;
@@ -200,8 +202,8 @@ public class Main extends Application {
 		builder = new JFXBuilder();
 		playfieldLayer.getChildren().add(new ImageView(mapImage));
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
-
-		player1 = new Player(playfieldLayer,"Patrick",5,new Position(200,200),new Position(200,200),true);
+		PlayerFactory factp = new PlayerFactory();
+		player1 = factp.Player(playfieldLayer,"Patrick",5,new Position(200,200),new Position(200,200),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
@@ -355,10 +357,11 @@ public class Main extends Application {
 	}
 
 	private void populateLoot() {
+		LootFactory factl = new LootFactory();
 		if (System.currentTimeMillis() > nextLootCall) {
 			nextLootCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(5000, 10000 + 1);
 			if (loots.size()<2){
-				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
+				Loot loot1 = factl.RandomLoot(playfieldLayer,shieldImage,swordImage,potionImage);
 				loot1.addToLayer(builder);
 				loots.add(loot1);
 			}
@@ -367,7 +370,7 @@ public class Main extends Application {
 				Loot removed = loots.get(ThreadLocalRandom.current().nextInt(0, 1 + 1));
 				removed.removeFromLayer(builder);
 				removed.setIsRemovable(true);
-				Loot loot1 = new Loot(playfieldLayer,shieldImage,swordImage,potionImage);
+				Loot loot1 = factl.RandomLoot(playfieldLayer,shieldImage,swordImage,potionImage);
 				loot1.addToLayer(builder);
 				loots.add(loot1);
 
@@ -376,10 +379,11 @@ public class Main extends Application {
 	}
 
 	private void populatePlayers() {
+		PlayerFactory factp = new PlayerFactory();
 		if (System.currentTimeMillis() > nextPlayerCall) {
 			nextPlayerCall = System.currentTimeMillis() + ThreadLocalRandom.current().nextInt(3000, 5000 + 1);
 			if (players.size()<4){
-				Player player2 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+				Player player2 = factp.RandomPlayer(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 				players.add(player2);
 				player2.addToLayer(builder);
 			}
@@ -389,7 +393,7 @@ public class Main extends Application {
 				if (removed.getName()!="Boss"){
 					removed.removeFromLayer(builder);
 					removed.setIsRemovable(true);
-					Player player3 = new Player(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
+					Player player3 = factp.RandomPlayer(playfieldLayer,BikermanImage, centurionImage,HorsemanImage,RobotImage);
 					players.add(player3);
 					player3.addToLayer(builder);
 				}
