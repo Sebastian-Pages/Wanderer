@@ -17,7 +17,7 @@ par Antoine LE FLOHIC et Sebastian PAGES
 
 # 1 - Introduction
 
-Ce jeu appelé Wanderer est un mini jeu où le but est de survivre dans une arène avec son armée dans le but d'y battre le boss de fin. Pour cela il est possible de recruter jusqu'à 9 soldats dans notre armée et de les équiper d'armes et de boucliers que l'on trouve par terre. 
+Ce jeu appelé Wanderer est un mini jeu inspiré de Wanderer.io où le but est de survivre dans une arène avec son armée dans le but d'y battre le boss de fin. Pour cela il est possible de recruter jusqu'à 9 soldats dans notre armée et de les équiper d'armes et de boucliers que l'on trouve par terre. 
 Notre armée possède donc un total de points de vie ( visible pour le joueur ), une attaque et une défence ( invisible pour le joueur ). 
 Lors d'un recrutement de nouvelles unitées ou de l'ajout d'équipements il faut avoir un score assez élevé pour pouvoir le dépenser ( le prix des nouveaux soldats est de 1 soldat = 1 de score).
 Pour gagner en score il faut donc battre des armées enemies dans le but de dépenser ce score ou d'Invoquer le boss final lorsque notre score est supérieur à 10.

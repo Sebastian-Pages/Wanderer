@@ -205,7 +205,7 @@ public class Main extends Application {
 		playfieldLayer.getChildren().add(new ImageView(mapImage));
 		AgeAbstractFactory age1 = new AgeMiddleFactory();
 		PlayerFactory factp = new PlayerFactory();
-		player1 = factp.Player(playfieldLayer,"Patrick",5,new Position(200,200),new Position(200,200),true);
+		player1 = factp.Player(playfieldLayer,"Patrick",8,new Position(200,200),new Position(200,200),true);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("human"), centurionImage);
 		player1.add(age1.infantryUnit("orc"), HorsemanImage);
